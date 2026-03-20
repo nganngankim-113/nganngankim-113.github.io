@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nguyen Kim Ngan — Graphic Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /*
+      Palette: A (Black & Gold) × B (White/Black/Gray) — editorial luxury core.
+      Muted gold accent anchors brand identity; warm near-black + cream paper = magazine weight.
+      Deep navy secondary (from C) elevates dark sections beyond plain black for visual dimension.
+    */
+    :root {
+      --charcoal: #1a1714;                      /* warm near-black — primary text, dark sections */
+      --offwhite: #f5f3ef;                      /* warm paper cream — page background */
+      --gold: #c1993f;                          /* primary accent — gold */
+      --gold-light: rgba(193, 153, 63, 0.10);   /* gold tint — subtle backgrounds */
+      --accent: #c1993f;                        /* alias → var(--gold) */
+      --accent-light: rgba(193, 153, 63, 0.10); /* alias → var(--gold-light) */
+      --accent-secondary: #1e2e42;              /* deep navy — editorial contrast depth */
+      --pink: #e0549a;                          /* actual pink — available for future use */
+      --pink-light: rgba(224, 84, 154, 0.10);   /* pink tint */
+      --beige: #b8965a;                         /* muted editorial beige */
+      --beige-light: rgba(184, 150, 90, 0.10);  /* beige tint */
+      --muted: #88847f;                         /* warm ash gray — secondary text */
+      --border: #dedad4;                        /* soft warm sand border */
+      --white: #ffffff;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Outfit', sans-serif; background: var(--offwhite); color: var(--charcoal); line-height: 1.6; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 5rem;
+      transition: background .3s, border-color .3s;
+    }
+    nav.scrolled { background: rgba(247,245,242,.97); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--charcoal); text-decoration: none; letter-spacing: .05em; }
+    .nav-links { list-style: none; display: flex; gap: 2.5rem; }
+    .nav-links a { font-size: .8rem; font-weight: 500; color: var(--charcoal); text-decoration: none; letter-spacing: .15em; text-transform: uppercase; transition: color .2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--charcoal); transition: .3s; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; display: grid; grid-template-columns: 1.1fr .9fr;
+      align-items: center; gap: 5rem; padding: 9rem 5rem 5rem;
+      position: relative; overflow: hidden;
+    }
+    #hero::after {
+      content: ''; position: absolute; top: -10%; right: -5%;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(184,150,90,.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-block; font-size: .68rem; font-weight: 500;
+      letter-spacing: .25em; text-transform: uppercase; color: var(--gold);
+      background: var(--gold-light); padding: .4rem 1rem; border-radius: 0; margin-bottom: 1.5rem;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 6vw, 5.8rem);
+      font-weight: 300; line-height: 1.02; letter-spacing: .02em; margin-bottom: 1.5rem;
+    }
+    .hero-name .accent { color: var(--gold); }
+    .hero-tagline { font-size: 1.05rem; color: var(--muted); font-weight: 300; max-width: 460px; line-height: 1.75; margin-bottom: 2.5rem; }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: .75rem;
+      background: transparent; color: var(--charcoal); text-decoration: none;
+      border: 1px solid var(--charcoal);
+      padding: 1rem 2.25rem; font-size: .82rem; font-weight: 500;
+      letter-spacing: .1em; text-transform: uppercase; transition: background .25s, border-color .25s, color .25s;
+    }
+    .hero-cta:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+    .hero-cta svg { transition: transform .2s; }
+    .hero-cta:hover svg { transform: translateX(4px); }
+    .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .stat-card {
+      padding: 2rem 1.75rem; background: var(--white); position: relative; overflow: hidden;
+      box-shadow: 0 1px 8px rgba(0,0,0,.04);
+    }
+    .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 1px; height: 100%; background: var(--gold); }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 700; line-height: 1; margin-bottom: .4rem; }
+    .stat-label { font-size: .72rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: 7rem 6rem; }
+    .sec-label { font-size: .68rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: .6rem; }
+    .sec-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700; line-height: 1.15; margin-bottom: 3.5rem; }
+    .sec-title em { font-style: italic; color: var(--gold); }
+
+    /* ── ABOUT ── */
+    #about { background: var(--accent-secondary); color: var(--offwhite); }
+    #about .sec-title { color: var(--offwhite); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .about-bio { font-size: 1.1rem; font-weight: 300; color: rgba(245,242,235,.82); line-height: 1.85; }
+    .about-bio strong { color: var(--offwhite); font-weight: 600; }
+    .about-bio p + p { margin-top: 1.2rem; }
+    .about-items { display: flex; flex-direction: column; gap: 0; }
+    .about-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1.5rem 0; border-bottom: 1px solid rgba(245,242,235,.08);
+    }
+    .about-item:last-child { border-bottom: none; }
+    .about-icon {
+      width: 40px; height: 40px; border-radius: 0;
+      background: rgba(184,150,90,.10); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .about-icon svg { color: var(--gold); }
+    .about-item h4 { font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(245,242,235,.45); margin-bottom: .3rem; }
+    .about-item p { font-size: .9rem; color: var(--offwhite); }
+    .about-item p.sub { font-size: .8rem; opacity: .55; margin-top: .2rem; }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--offwhite); }
+    .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .exp-card {
+      padding: 2.5rem; background: var(--white);
+      box-shadow: 0 1px 8px rgba(0,0,0,.04);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .exp-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,.06); }
+    .exp-period { font-size: .75rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: .4rem; }
+    .exp-company { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; font-weight: 700; margin-bottom: .3rem; }
+    .exp-role { font-size: .8rem; font-weight: 500; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; padding-bottom: 1.25rem; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    .exp-badge { font-size: .72rem; background: var(--gold-light); color: var(--gold); padding: .2rem .65rem; border-radius: 0; font-weight: 500; letter-spacing: .04em; }
+    .exp-list { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+    .exp-list li { font-size: .88rem; color: var(--muted); padding-left: 1.2rem; position: relative; line-height: 1.55; }
+    .exp-list li::before { content: ''; position: absolute; left: 0; top: .6em; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+    /* ── EDUCATION & CERTS ── */
+    .edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 4rem; }
+    .edu-card { padding: 2rem; background: var(--offwhite); border-left: 1px solid var(--gold); }
+    .edu-period { font-size: .72rem; font-weight: 500; color: var(--gold); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .5rem; }
+    .edu-school { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: .6rem; }
+    .edu-detail { font-size: .85rem; color: var(--muted); margin-top: .3rem; }
+    .cert-row { display: flex; justify-content: space-between; align-items: center; padding: .55rem 0; border-bottom: 1px solid var(--border); }
+    .cert-row:last-child { border-bottom: none; }
+    .cert-name { font-size: .85rem; font-weight: 500; }
+    .cert-score { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 700; color: var(--gold); }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--white); }
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+    .skills-group h3 { font-size: .68rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 2rem; }
+    .skill-bar { margin-bottom: 1.75rem; }
+    .skill-bar-head { display: flex; justify-content: space-between; margin-bottom: .55rem; }
+    .skill-bar-name { font-size: .9rem; font-weight: 400; }
+    .skill-bar-pct { font-size: .8rem; font-weight: 500; color: var(--gold); }
+    .skill-track { height: 1px; background: var(--border); position: relative; overflow: hidden; }
+    .skill-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--gold); width: 0; transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+    .tools-wrap { margin-top: 2.5rem; }
+    .tools-wrap h3 { font-size: .68rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; }
+    .tool-tags { display: flex; flex-wrap: wrap; gap: .65rem; }
+    .tool-tag { padding: .5rem 1.1rem; background: var(--offwhite); font-size: .83rem; font-weight: 400; border: 1px solid var(--border); transition: background .2s, border-color .2s, color .2s; cursor: default; }
+    .tool-tag:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+    /* ── PORTFOLIO TABS ── */
+    #portfolio { background: var(--offwhite); }
+    .port-tabs { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .port-tab { padding: .55rem 1.25rem; font-family: 'Outfit', sans-serif; font-size: .8rem; font-weight: 500; letter-spacing: .08em; border: 1px solid var(--border); background: var(--white); color: var(--charcoal); cursor: pointer; transition: all .2s; }
+    .port-tab:hover { border-color: var(--charcoal); background: var(--charcoal); color: var(--offwhite); }
+    .port-tab.active { background: var(--gold); border-color: var(--gold); color: #fff; }
+    #portContent { transition: opacity .3s; }
+
+    /* ── LAYOUT A — Phone Hero ── */
+    .laya-hero { background: linear-gradient(135deg, #f8f6f3 0%, #eee8e3 100%); border-radius: 0; padding: 2.5rem 2rem; display: flex; align-items: center; justify-content: center; gap: 2rem; max-height: 500px; overflow: hidden; margin-bottom: 2.5rem; }
+    .laya-phone { width: 200px; height: 390px; background: #1a1520; border-radius: 30px; padding: 14px 8px; box-shadow: 0 20px 60px rgba(0,0,0,.18), 0 4px 16px rgba(0,0,0,.1); position: relative; flex-shrink: 0; }
+    .laya-phone::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 50px; height: 7px; background: #2d2430; border-radius: 4px; }
+    .laya-phone-screen { width: 100%; height: 100%; border-radius: 18px; overflow: hidden; background: #fff; position: relative; }
+    .laya-stack { width: 100%; height: 100%; position: relative; overflow: hidden; }
+    .laya-stack-img { position: absolute; width: 100%; object-fit: cover; display: block; }
+    .laya-side-imgs { display: flex; flex-direction: column; gap: 10px; flex: 1; max-width: 180px; }
+    .laya-side-img { width: 100%; border-radius: 0; box-shadow: 0 1px 8px rgba(0,0,0,.06); object-fit: cover; cursor: pointer; transition: transform .3s ease, box-shadow .3s ease; }
+    .laya-side-img:nth-child(1) { transform: rotate(-2deg); }
+    .laya-side-img:nth-child(2) { transform: rotate(1.5deg); }
+    .laya-side-img:nth-child(3) { transform: rotate(-1deg); }
+    .laya-side-img:hover { transform: rotate(0) scale(1.04) !important; box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+
+    /* ── LAYOUT A — Instagram Card Grid ── */
+    .insta-grid { columns: 4; column-gap: 1rem; }
+    .insta-card { break-inside: avoid; margin-bottom: 1rem; background: #fff; border: none; border-radius: 0; box-shadow: 0 1px 8px rgba(0,0,0,.04); overflow: hidden; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease; }
+    .insta-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,.06); }
+    .insta-card-header { display: flex; align-items: center; justify-content: space-between; padding: .45rem .7rem; }
+    .insta-card-user { display: flex; align-items: center; gap: .4rem; }
+    .insta-avatar { width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(45deg, var(--gold), #ff9a00); flex-shrink: 0; }
+    .insta-username { font-size: .62rem; font-weight: 600; color: #1a1520; }
+    .insta-actions-top { display: flex; gap: .3rem; color: #bbb; }
+    .insta-actions-top svg { width: 13px; height: 13px; }
+    .insta-card img { width: 100%; display: block; object-fit: contain; background: #f7f7f7; }
+    .insta-card-footer { display: flex; gap: .45rem; align-items: center; padding: .4rem .7rem; color: #bbb; }
+    .insta-card-footer svg { width: 13px; height: 13px; }
+
+    /* ── LAYOUT B — Flipbook ── */
+    .layb-flipbook { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; margin-bottom: 3rem; position: relative; }
+    .layb-flip-stage { display: flex; align-items: center; gap: 1rem; width: 100%; max-width: 1100px; position: relative; }
+    .layb-nav-btn { width: 46px; height: 46px; flex-shrink: 0; border-radius: 0; background: var(--white); border: 1px solid var(--border); color: var(--charcoal); font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+    .layb-nav-btn:hover:not(:disabled) { background: var(--gold); border-color: var(--gold); color: #fff; }
+    .layb-nav-btn:disabled { opacity: .3; cursor: default; }
+    .layb-book-wrap { flex: 1; min-width: 0; }
+    .layb-indicator { font-size: .72rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+    /* ── Magazine book container ── */
+    .magazine-book-container {
+      flex: 1; min-width: 0;
+      perspective: 1400px;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 1rem 0 1rem;
+    }
+    .magazine-book-inner {
+      position: relative;
+      transform: rotateX(25deg) rotateZ(-1deg);
+      transform-style: preserve-3d;
+      transform-origin: center 70%;
+      transition: transform 0.4s ease;
+      box-shadow: 0 25px 50px rgba(0,0,0,.12), 0 8px 16px rgba(0,0,0,.06);
+    }
+    /* Right page-edge stack — very subtle */
+    .magazine-book-inner::before {
+      content: ''; pointer-events: none; z-index: 1;
+      position: absolute; top: 2px; right: -4px;
+      width: 4px; height: calc(100% - 4px);
+      box-shadow: 2px 0 0 #ece8e4, 4px 0 0 #e8e4e0;
+    }
+    /* Bottom page-stack thickness */
+    .magazine-book-inner::after {
+      content: '';
+      position: absolute; bottom: -5px; left: 2%; right: 2%;
+      height: 5px;
+      background: linear-gradient(to bottom, #d5d0cb, #c8c3be);
+      border-radius: 0 0 2px 2px;
+      transform: rotateX(-90deg);
+      transform-origin: top;
+    }
+    /* Ground shadow */
+    .magazine-surface-shadow {
+      width: 80%; height: 24px; margin: -4px auto 0;
+      background: radial-gradient(ellipse, rgba(0,0,0,.10) 0%, transparent 65%);
+      filter: blur(12px);
+    }
+    /* Gutter shadow at center spine — subtle only */
+    .stf__parent::after {
+      content: '';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 16px; height: 100%;
+      background: linear-gradient(to right,
+        transparent 0%,
+        rgba(0,0,0,.04) 35%,
+        rgba(0,0,0,.07) 50%,
+        rgba(0,0,0,.04) 65%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* ── StPageFlip magazine page styles ── */
+    .magazine-page { background: #faf8f5; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); font-family: 'Outfit', sans-serif; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-sizing: border-box; position: relative; }
+    /* ── Cover page ── */
+    .magazine-page-cover { position: relative; background: var(--charcoal); color: var(--offwhite); display: flex; flex-direction: column; height: 100%; box-sizing: border-box; overflow: hidden; padding: 0; }
+    .mag-cover-img-bg { position: absolute; inset: 0; overflow: hidden; }
+    .mag-cover-img-bg img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.52; }
+    .mag-cover-content { position: relative; z-index: 2; display: flex; flex-direction: column; height: 100%; background: linear-gradient(to bottom, rgba(26,23,20,.5) 0%, rgba(26,23,20,.08) 42%, rgba(26,23,20,.72) 100%); padding: 1.4rem 1.25rem; justify-content: space-between; }
+    .mag-cover-head { display: flex; justify-content: space-between; align-items: center; }
+    .mag-cover-label { font-size: .52rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+    .mag-cover-tag { font-size: .52rem; letter-spacing: .1em; color: rgba(255,255,255,.4); }
+    .mag-cover-mid { text-align: center; }
+    .mag-cover-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 700; line-height: 1.0; letter-spacing: .06em; text-transform: uppercase; text-shadow: 0 2px 12px rgba(0,0,0,.4); margin-bottom: .4rem; }
+    .mag-cover-sub { font-size: .55rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+    .mag-cover-foot { text-align: center; }
+    .mag-cover-issue { font-size: .52rem; letter-spacing: .12em; color: rgba(255,255,255,.45); }
+    /* ── Interior spread pages ── */
+    .magazine-page-spread { display: flex; flex-direction: column; height: 100%; padding: 0.55rem; box-sizing: border-box; }
+    .magazine-page-spread-img { flex: 1; overflow: hidden; cursor: pointer; position: relative; box-shadow: inset 0 0 0 1px rgba(0,0,0,.05); }
+    .magazine-page-spread-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+    .magazine-page-spread-img:hover img { transform: scale(1.02); }
+    .magazine-page-caption { padding: .45rem .2rem .1rem; display: flex; justify-content: space-between; align-items: baseline; flex-shrink: 0; }
+    .mag-pg-title { font-family: 'Cormorant Garamond', serif; font-size: .8rem; font-weight: 600; color: var(--charcoal); letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 82%; }
+    .mag-pg-num { font-size: .52rem; color: var(--muted); font-weight: 500; letter-spacing: .1em; flex-shrink: 0; }
+    /* ── Back cover ── */
+    .magazine-page-back { background: var(--charcoal); color: var(--offwhite); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2.5rem 2rem; height: 100%; box-sizing: border-box; }
+    .mag-back-icon { font-size: 1.5rem; color: var(--gold); margin-bottom: 1.25rem; line-height: 1; }
+    .mag-back-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2.2vw, 1.55rem); font-weight: 400; font-style: italic; line-height: 1.4; color: var(--offwhite); margin-bottom: .85rem; }
+    .mag-back-sub { font-size: .6rem; color: rgba(245,242,235,.38); letter-spacing: .14em; text-transform: uppercase; }
+    /* legacy cover/end classes kept for compatibility */
+    .magazine-page-img { flex: 0 0 68%; overflow: hidden; background: #f0ede8; cursor: pointer; }
+    .magazine-page-img img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform .4s ease; }
+    .magazine-page-img:hover img { transform: scale(1.04); }
+    .magazine-page-info { flex: 1; padding: 1rem 1.25rem 1.75rem; display: flex; flex-direction: column; justify-content: center; border-top: 1px solid var(--border); position: relative; }
+    .magazine-page-cat   { font-size: .58rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+    .magazine-page-title { font-family: 'Cormorant Garamond', serif; font-size: .95rem; font-weight: 700; line-height: 1.2; margin-bottom: .25rem; color: var(--charcoal); }
+    .magazine-page-num   { position: absolute; bottom: .55rem; right: .75rem; font-size: .58rem; font-weight: 600; color: var(--muted); opacity: .45; letter-spacing: .08em; }
+    .mag-cover-count { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 2vw, 1.8rem); font-weight: 700; color: var(--gold); }
+    .mag-end-icon    { font-size: 2rem; color: var(--gold); margin-bottom: 1rem; line-height: 1; }
+    .mag-end-title   { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 2.2vw, 1.8rem); font-weight: 700; line-height: 1.15; color: var(--charcoal); margin-bottom: .6rem; }
+    .mag-end-sub     { font-size: .68rem; color: var(--muted); margin-bottom: 1rem; }
+
+    /* ── LAYOUT B — Scene Grid ── */
+    .scene-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .scene-card { aspect-ratio: 1; border-radius: 0; overflow: hidden; background: #f0ece8; box-shadow: 0 1px 8px rgba(0,0,0,.04); cursor: pointer; transition: transform .25s ease, box-shadow .25s ease; }
+    .scene-card:hover { transform: scale(1.02); box-shadow: 0 8px 32px rgba(0,0,0,.06); }
+    .scene-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ── Empty state ── */
+    .tab-empty { text-align: center; padding: 5rem 2rem; color: var(--muted); }
+    .tab-empty p { font-size: .9rem; margin-top: .5rem; }
+
+    /* ── TAB PANEL ── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: tabFade .3s ease; }
+    @keyframes tabFade { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ── LAYOUT C — Simple Grid ── */
+    .layc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .layc-card { aspect-ratio: 1; border-radius: 0; overflow: hidden; background: var(--white); box-shadow: 0 1px 8px rgba(0,0,0,.04); cursor: pointer; position: relative; border: none; transition: transform .25s ease, box-shadow .25s ease; }
+    .layc-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,.06); }
+    .layc-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .layc-overlay { position: absolute; inset: 0; background: rgba(26,21,32,.72); opacity: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1rem; transition: opacity .25s; }
+    .layc-card:hover .layc-overlay { opacity: 1; }
+    .layc-overlay-title { font-size: .85rem; font-weight: 600; color: #fff; margin-bottom: .3rem; }
+    .layc-overlay-cat { font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) { .insta-grid { columns: 3; } .scene-grid { grid-template-columns: repeat(2, 1fr); } .layc-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 768px) { .insta-grid { columns: 2; } .laya-phone { width: 150px; height: 300px; } .laya-side-imgs { max-width: 130px; } .layb-flip-stage { gap: .5rem; } .layb-nav-btn { width: 36px; height: 36px; font-size: .9rem; } .layc-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .scene-grid { grid-template-columns: 1fr; } .laya-hero { flex-direction: column; max-height: none; } .layc-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(15,15,15,.96);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity .3s;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lb-inner { position: relative; display: flex; flex-direction: column; align-items: center; max-width: 90vw; }
+    .lb-img { max-width: 85vw; max-height: 80vh; object-fit: contain; display: block; }
+    .lb-caption { color: #fff; font-size: .88rem; font-weight: 500; margin-top: 1rem; opacity: .75; }
+    .lb-caption em { color: var(--gold); font-style: normal; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; margin-left: .6rem; }
+    .lb-close {
+      position: absolute; top: -2.5rem; right: 0;
+      background: none; border: none; color: #fff; font-size: 1.4rem;
+      cursor: pointer; opacity: .6; transition: opacity .2s, color .2s; line-height: 1;
+    }
+    .lb-close:hover { opacity: 1; color: var(--gold); }
+    .lb-nav {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,.08); border: none; color: #fff;
+      width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1.25rem; transition: background .2s;
+    }
+    .lb-nav:hover { background: var(--gold); }
+    .lb-prev { left: 1.5rem; }
+    .lb-next { right: 1.5rem; }
+    .lb-counter { position: absolute; bottom: -2.5rem; left: 50%; transform: translateX(-50%); font-size: .75rem; color: rgba(255,255,255,.4); letter-spacing: .08em; white-space: nowrap; }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--charcoal); color: var(--offwhite); }
+    #contact .sec-title { color: var(--offwhite); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .contact-intro { font-size: 1.05rem; color: rgba(245,242,235,.7); font-weight: 300; line-height: 1.8; margin-top: -.5rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; margin-top: .5rem; }
+    .contact-link { display: flex; align-items: center; gap: 1rem; color: var(--offwhite); text-decoration: none; font-size: .95rem; transition: color .2s; }
+    .contact-link:hover { color: var(--gold); }
+    .c-icon { width: 46px; height: 46px; background: rgba(245,242,235,.07); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .2s; }
+    .contact-link:hover .c-icon { background: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #101010; color: rgba(245,242,235,.4);
+      padding: 2rem 5rem; display: flex; justify-content: space-between; align-items: center;
+    }
+    .foot-copy { font-size: .78rem; }
+    .back-top { display: flex; align-items: center; gap: .5rem; color: rgba(245,242,235,.4); text-decoration: none; font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; transition: color .2s; }
+    .back-top:hover { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    .fade { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+    .fade.in { opacity: 1; transform: none; }
+    .fade.d1 { transition-delay: .1s; }
+    .fade.d2 { transition-delay: .2s; }
+    .fade.d3 { transition-delay: .3s; }
+    .fade.d4 { transition-delay: .4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      section, nav, footer { padding-left: 3rem; padding-right: 3rem; }
+      #hero { padding-left: 3rem; padding-right: 3rem; }
+    }
+    @media (max-width: 880px) {
+      section { padding: 5rem 2.5rem; }
+      nav { padding: 1.25rem 2rem; }
+      footer { padding: 1.75rem 2rem; }
+      #hero { grid-template-columns: 1fr; padding: 6.5rem 2rem 3rem; min-height: auto; gap: 3rem; }
+      .about-grid, .exp-grid, .contact-grid, .skills-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: repeat(4, 1fr); }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--offwhite); padding: 1.25rem 2rem 1.75rem; box-shadow: 0 8px 32px rgba(0,0,0,.1); gap: 1rem; }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: flex; }
+    }
+    @media (max-width: 600px) {
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+    /* ── FOR YOU ── */
+    .nav-links a.nav-foryou { color: var(--gold); }
+    .nav-links a.nav-foryou:hover { color: var(--gold); opacity: .75; }
+
+    /* Password Gate */
+    .pw-gate {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(20,16,14,.95); backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity .35s;
+    }
+    .pw-gate.open { opacity: 1; pointer-events: all; }
+    .pw-box {
+      background: var(--offwhite); padding: 3rem 2.5rem 2.5rem;
+      max-width: 360px; width: 90%; text-align: center; position: relative;
+    }
+    .pw-emoji { font-size: 2.5rem; margin-bottom: .75rem; display: block; }
+    .pw-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: .4rem; }
+    .pw-box p { font-size: .88rem; color: var(--muted); margin-bottom: 1.75rem; }
+    .pw-input {
+      display: block; width: 100%; padding: .85rem 1rem; text-align: center;
+      letter-spacing: .4em; font-family: 'Outfit', sans-serif; font-size: 1.25rem;
+      border: 1px solid var(--border); background: var(--white);
+      color: var(--charcoal); outline: none; transition: border-color .2s;
+      margin-bottom: .75rem;
+    }
+    .pw-input:focus { border-color: var(--gold); }
+    .pw-input.shake { animation: pw-shake .45s ease; }
+    @keyframes pw-shake {
+      0%,100% { transform: translateX(0); border-color: var(--gold); }
+      20% { transform: translateX(-9px); }
+      40% { transform: translateX(9px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+    .pw-err { display: block; font-size: .83rem; color: var(--gold); min-height: 1.4em; margin-bottom: .75rem; }
+    .pw-btn {
+      width: 100%; padding: .9rem 1rem; border: 1px solid var(--charcoal); cursor: pointer;
+      background: transparent; color: var(--charcoal);
+      font-family: 'Outfit', sans-serif; font-size: .88rem;
+      font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .pw-btn:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+    .pw-x {
+      position: absolute; top: .9rem; right: .9rem; background: none; border: none;
+      font-size: 1.25rem; color: var(--muted); cursor: pointer; line-height: 1; transition: color .2s;
+    }
+    .pw-x:hover { color: var(--charcoal); }
+
+    /* For You Section */
+    #foryou {
+      display: none; min-height: 100vh;
+      background: linear-gradient(150deg, var(--offwhite) 0%, #fff0f7 60%, #ffe8f3 100%);
+      position: relative; overflow: hidden;
+      flex-direction: column; align-items: center; justify-content: center;
+    }
+    #foryou.revealed { display: flex; }
+    .fy-petals { position: absolute; inset: 0; pointer-events: none; }
+    .petal {
+      position: absolute; top: -3rem; user-select: none;
+      animation: petal-fall linear infinite; opacity: 0;
+    }
+    @keyframes petal-fall {
+      0%   { transform: translateY(-5vh) translateX(0) rotate(0deg); opacity: 0; }
+      8%   { opacity: .9; }
+      90%  { opacity: .9; }
+      100% { transform: translateY(108vh) translateX(var(--sw)) rotate(560deg); opacity: 0; }
+    }
+    .fy-content { position: relative; z-index: 10; text-align: center; padding: 5rem 2rem; max-width: 800px; }
+    .fy-label { font-size: .72rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+    .fy-msg {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.7rem, 3.8vw, 3rem);
+      font-weight: 400; line-height: 1.5; color: var(--charcoal);
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 1s ease .2s, transform 1s ease .2s;
+    }
+    .fy-msg.in { opacity: 1; transform: none; }
+    .fy-accent { color: var(--gold); font-style: italic; }
+    .fy-happy  { color: #ff69b4; font-style: normal; }
+    .fy-animal { display: block; max-width: 360px; max-height: 360px; object-fit: contain; margin: 1.75rem auto 0; border-radius: 0; box-shadow: 0 4px 20px rgba(0,0,0,.08); opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+    .fy-animal.in { opacity: 1; transform: none; }
+    .fy-heart {
+      display: block; font-size: 3rem; margin-top: 2.5rem;
+      opacity: 0; transform: scale(.4);
+      transition: opacity .7s ease 1s, transform .7s cubic-bezier(.34,1.56,.64,1) 1s;
+    }
+    .fy-heart.in { opacity: 1; transform: scale(1); animation: hb 1.4s ease 1.7s infinite; }
+    @keyframes hb { 0%,100% { transform: scale(1); } 50% { transform: scale(1.16); } }
+
+    /* Confetti */
+    .cft {
+      position: fixed; z-index: 9999; pointer-events: none;
+      border-radius: 2px; animation: cft-fall linear forwards;
+    }
+    @keyframes cft-fall {
+      0%   { transform: translateY(-5px) rotate(0deg) translateX(0); opacity: 1; }
+      100% { transform: translateY(108vh) rotate(var(--rot)) translateX(var(--dx)); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#hero">NKN</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#foryou" class="nav-foryou" id="navForyou">✨ For You</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content fade">
+    <div class="hero-tag">Graphic Designer · HCMC, Vietnam</div>
+    <h1 class="hero-name">Nguyen<br>Kim <span class="accent">Ngan</span></h1>
+    <p class="hero-tagline">I design to communicate ideas — clear, intentional, and visually engaging. Creating visual assets across digital &amp; print platforms.</p>
+    <a href="#portfolio" class="hero-cta">
+      View Portfolio
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+  <div class="hero-visual fade d2">
+    <div class="hero-stats">
+      <div class="stat-card"><div class="stat-num">3+</div><div class="stat-label">Years Experience</div></div>
+      <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Award Projects</div></div>
+      <div class="stat-card"><div class="stat-num">300+</div><div class="stat-label">Product Listings</div></div>
+      <div class="stat-card"><div class="stat-num">45+</div><div class="stat-label">Portfolio Pieces</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-label fade">About Me</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="sec-title fade">Designing with <em>purpose</em>,<br>built on strategy</h2>
+      <div class="about-bio fade d1">
+        <p>I'm <strong>Nguyen Kim Ngan</strong>, a Graphic Designer based in Ho Chi Minh City, Vietnam. With over 3 years of hands-on experience, I specialize in visual communication across digital and print media — from POSM and packaging to brand identity systems and social content.</p>
+        <p>As a versatile creative, I've personally owned <strong>80–90% of marketing visuals</strong> for B2C brands and built full content ecosystems for B2B tech companies. I stay adaptable in the fast-changing creative industry, always designing with clear intent and measurable impact.</p>
+      </div>
+    </div>
+    <div class="about-items fade d2">
+      <div class="about-item">
+        <div class="about-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <h4>Location</h4>
+          <p>Tan Son Hoa Ward, Ho Chi Minh City</p>
+        </div>
+      </div>
+      <div class="about-item">
+        <div class="about-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <div>
+          <h4>Education</h4>
+          <p>Areana Multimedia — DIM: Distinction</p>
+          <p class="sub">Thu Dau Mot University — Business English, GPA 7/10</p>
+        </div>
+      </div>
+      <div class="about-item">
+        <div class="about-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+        </div>
+        <div>
+          <h4>Achievements</h4>
+          <p>🥇 GARUM — Branding Design (1st Place, Areana)</p>
+          <p class="sub">🥉 WANDER — Traveling App Design (3rd Place, Areana)</p>
+        </div>
+      </div>
+      <div class="about-item">
+        <div class="about-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <div>
+          <h4>Tools</h4>
+          <p>Photoshop · Illustrator · Canva · Adobe XD · WordPress</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="sec-label fade">Work History</div>
+  <h2 class="sec-title fade">Professional <em>Experience</em></h2>
+  <div class="exp-grid">
+    <div class="exp-card fade">
+      <div class="exp-period">07 / 2023 – 03 / 2025</div>
+      <div class="exp-company">Nutrition Depot Vietnam</div>
+      <div class="exp-role">Content Marketing Specialist <span class="exp-badge">1 yr 9 mos</span></div>
+      <ul class="exp-list">
+        <li>Owned 80–90% of marketing visuals &amp; content (graphic design, video production, copywriting) for a B2C brand across website, e-commerce, social media, email &amp; events.</li>
+        <li>Managed 300+ product listings across Company Website, Shopee, Lazada, TikTok Shop, etc.</li>
+        <li>Created POSM &amp; digital designs: banners, posters, packaging, tent cards, standees.</li>
+        <li>Produced promotional &amp; event recap video content.</li>
+        <li>Localized and optimized product content per platform.</li>
+      </ul>
+    </div>
+    <div class="exp-card fade d1">
+      <div class="exp-period">05 / 2022 – 04 / 2023</div>
+      <div class="exp-company">Ceres Solutions Co. Ltd.</div>
+      <div class="exp-role">Content Marketing Executive <span class="exp-badge">1 yr</span></div>
+      <ul class="exp-list">
+        <li>Owned full content &amp; visual production for a B2B tech company on Facebook, YouTube, TikTok, Zalo, and Email.</li>
+        <li>Designed marketing materials: posters, social media graphics, email templates, screen images, website layouts.</li>
+        <li>Created user docs &amp; educational videos (blogs, AI voice, motion graphics).</li>
+        <li>Built knowledge base of 100+ blogs and 20+ educational videos.</li>
+        <li>Partnered with QA team; delivered customer support with &lt;5-min response time.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Education & Certs -->
+  <div class="edu-grid">
+    <div class="edu-card fade">
+      <div class="edu-period">07 / 2023 – 10 / 2024</div>
+      <div class="edu-school">Areana Multimedia</div>
+      <div class="edu-detail">Diploma of Interactive Media (DIM)</div>
+      <div class="edu-detail" style="margin-top:.75rem; font-weight:600; color:var(--charcoal);">Result: <span style="color:var(--gold)">Distinction</span></div>
+      <div class="edu-detail">Graphic Design Suite: 90 / 100</div>
+      <div class="edu-detail">Digital Product Design: 84 / 100</div>
+    </div>
+    <div class="edu-card fade d1">
+      <div class="edu-period">07 / 2017 – 03 / 2021</div>
+      <div class="edu-school">Thu Dau Mot University</div>
+      <div class="edu-detail">Major: Business English</div>
+      <div class="edu-detail">GPA: 7 / 10</div>
+    </div>
+    <div class="edu-card fade d2">
+      <div class="edu-period">Microsoft Office Specialist</div>
+      <div class="edu-school">MOS Certifications</div>
+      <div style="margin-top:1rem;">
+        <div class="cert-row"><span class="cert-name">MOS PowerPoint 2010</span><span class="cert-score">957</span></div>
+        <div class="cert-row"><span class="cert-name">MOS Word 2010</span><span class="cert-score">931</span></div>
+        <div class="cert-row"><span class="cert-name">MOS Excel 2010</span><span class="cert-score">925</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-label fade">Capabilities</div>
+  <h2 class="sec-title fade">Skills &amp; <em>Tools</em></h2>
+  <div class="skills-grid">
+    <div class="skills-group fade" id="skillsLeft">
+      <h3>Design Skills</h3>
+      <div class="skill-bar" data-pct="95">
+        <div class="skill-bar-head"><span class="skill-bar-name">Graphic Design</span><span class="skill-bar-pct">95%</span></div>
+        <div class="skill-track"><div class="skill-fill"></div></div>
+      </div>
+      <div class="skill-bar" data-pct="90">
+        <div class="skill-bar-head"><span class="skill-bar-name">Branding &amp; Identity</span><span class="skill-bar-pct">90%</span></div>
+        <div class="skill-track"><div class="skill-fill"></div></div>
+      </div>
+      <div class="skill-bar" data-pct="90">
+        <div class="skill-bar-head"><span class="skill-bar-name">POSM &amp; Print Design</span><span class="skill-bar-pct">90%</span></div>
+        <div class="skill-track"><div class="skill-fill"></div></div>
+      </div>
+      <div class="skill-bar" data-pct="88">
+        <div class="skill-bar-head"><span class="skill-bar-name">Social Media Design</span><span class="skill-bar-pct">88%</span></div>
+        <div class="skill-track"><div class="skill-fill"></div></div>
+      </div>
+      <div class="skill-bar" data-pct="75">
+        <div class="skill-bar-head"><span class="skill-bar-name">Video Production &amp; Motion</span><span class="skill-bar-pct">75%</span></div>
+        <div class="skill-track"><div class="skill-fill"></div></div>
+      </div>
+    </div>
+    <div class="skills-group fade d1" id="skillsRight">
+      <h3>Marketing &amp; Content</h3>
+      <div class="skill-bar" data-pct="85">
+        <div class="skill-bar-head"><span class="skill-bar-name">Digital Marketing</span><span class="skill-bar-pct">85%</span></div>
+        <div class="skill-track"><div class="skill-fill"></div></div>
+      </div>
+      <div class="skill-bar" data-pct="82">
+        <div class="skill-bar-head"><span class="skill-bar-name">Copywriting</span><span class="skill-bar-pct">82%</span></div>
+        <div class="skill-track"><div class="skill-fill"></div></div>
+      </div>
+      <div class="skill-bar" data-pct="80">
+        <div class="skill-bar-head"><span class="skill-bar-name">E-commerce Management</span><span class="skill-bar-pct">80%</span></div>
+        <div class="skill-track"><div class="skill-fill"></div></div>
+      </div>
+      <div class="tools-wrap">
+        <h3>Design Tools</h3>
+        <div class="tool-tags">
+          <span class="tool-tag">Adobe Photoshop</span>
+          <span class="tool-tag">Adobe Illustrator</span>
+          <span class="tool-tag">Canva</span>
+          <span class="tool-tag">Adobe XD</span>
+          <span class="tool-tag">WordPress</span>
+          <span class="tool-tag">Motion Graphics</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="sec-label fade">Selected Work</div>
+  <h2 class="sec-title fade">Work <em>Gallery</em></h2>
+
+  <div class="port-tabs fade">
+    <button class="port-tab active" data-tab="allwork">All</button>
+    <button class="port-tab" data-tab="advertising">Advertising &amp; Digital</button>
+    <button class="port-tab" data-tab="print">Print &amp; Editorial</button>
+    <button class="port-tab" data-tab="branding">Branding &amp; Packaging</button>
+    <button class="port-tab" data-tab="featured">Featured Projects</button>
+    <button class="port-tab" data-tab="playground">Playground</button>
+    <!-- UI-Web tab hidden until products are ready:
+    <button class="port-tab" data-tab="web">UI - Web</button>
+    -->
+  </div>
+
+  <div id="portContent">
+
+    <!-- Layout All Work: all tabs combined, Layout C grid -->
+    <div class="tab-panel active" data-panel="allwork">
+      <div class="layc-grid" id="allWorkGrid"></div>
+    </div>
+
+    <!-- Layout A: Advertising & Digital -->
+    <div class="tab-panel" data-panel="advertising">
+      <div class="laya-hero">
+        <div class="laya-phone">
+          <div class="laya-phone-screen">
+            <div class="laya-stack" id="layaStack"></div>
+          </div>
+        </div>
+        <div class="laya-side-imgs" id="layaSide"></div>
+      </div>
+      <div class="insta-grid" id="instaGrid"></div>
+    </div>
+
+    <!-- Layout B: Print & Editorial -->
+    <div class="tab-panel" data-panel="print">
+      <div class="layb-flipbook">
+        <div class="layb-flip-stage">
+          <button class="layb-nav-btn" id="laybPrev" disabled>&#8592;</button>
+          <div class="magazine-book-container">
+            <div class="magazine-book-inner">
+              <div class="layb-book-wrap" id="laybBookWrap">
+                <div id="laybBook"></div>
+              </div>
+            </div>
+            <div class="magazine-surface-shadow"></div>
+          </div>
+          <button class="layb-nav-btn" id="laybNext">&#8594;</button>
+        </div>
+        <div class="layb-indicator" id="laybIndicator"></div>
+      </div>
+      <div class="scene-grid" id="sceneGrid"></div>
+    </div>
+
+    <!-- Layout C: Branding & Packaging -->
+    <div class="tab-panel" data-panel="branding">
+      <div class="layc-grid" id="brandingGrid"></div>
+    </div>
+
+    <!-- Layout C: Featured Projects -->
+    <div class="tab-panel" data-panel="featured">
+      <div class="layc-grid" id="featuredGrid"></div>
+    </div>
+
+    <!-- Layout C: Playground -->
+    <div class="tab-panel" data-panel="playground">
+      <div class="layc-grid" id="playgroundGrid"></div>
+    </div>
+
+    <!-- UI-Web panel hidden until products are ready:
+    <div class="tab-panel" data-panel="web">
+      <div class="layc-grid" id="webGrid"></div>
+    </div>
+    -->
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-label fade">Get In Touch</div>
+  <div class="contact-grid">
+    <div>
+      <h2 class="sec-title fade">Let's create something <em>meaningful</em></h2>
+      <p class="contact-intro fade d1">Open for freelance projects, full-time opportunities, and creative collaborations. Reach out and let's discuss your vision.</p>
+    </div>
+    <div class="contact-links fade d2">
+      <a href="mailto:Nganngankim.113@gmail.com" class="contact-link">
+        <div class="c-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        Nganngankim.113@gmail.com
+      </a>
+      <a href="tel:0964378010" class="contact-link">
+        <div class="c-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.04a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        0964 378 010
+      </a>
+      <a href="https://www.linkedin.com/in/nganngankim113" target="_blank" rel="noopener" class="contact-link">
+        <div class="c-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+        LinkedIn Profile
+      </a>
+      <div class="contact-link" style="cursor:default;">
+        <div class="c-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        Tan Son Hoa Ward, HCMC, Vietnam
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR YOU SECTION -->
+<section id="foryou">
+  <div class="fy-petals" id="fyPetals"></div>
+  <div class="fy-content">
+    <div class="fy-label">Dành riêng cho embe ✨</div>
+    <div class="fy-msg" id="fyMsg"></div>
+    <img class="fy-animal" id="fyAnimal" src="" alt="Smile">
+    <span class="fy-heart" id="fyHeart">💝</span>
+  </div>
+</section>
+
+<!-- PASSWORD GATE -->
+<div class="pw-gate" id="pwGate" role="dialog" aria-modal="true">
+  <div class="pw-box">
+    <button class="pw-x" id="pwClose" aria-label="Đóng">✕</button>
+    <span class="pw-emoji">🔐</span>
+    <h3>For You</h3>
+    <p>Có điều gì đó đặc biệt đang chờ...</p>
+    <input type="password" class="pw-input" id="pwInput" placeholder="Nhập mật khẩu..." maxlength="10" autocomplete="off">
+    <span class="pw-err" id="pwErr"></span>
+    <button class="pw-btn" id="pwSubmit">Mở ra 💝</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="foot-copy">© 2025 Nguyen Kim Ngan. All rights reserved.</span>
+  <a href="#hero" class="back-top">
+    Back to top
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 13V3M3 8l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8592;</button>
+  <div class="lb-inner">
+    <button class="lb-close" id="lbClose" aria-label="Close">&#10005;</button>
+    <img class="lb-img" id="lbImg" src="" alt="">
+    <div class="lb-caption" id="lbCaption"></div>
+    <div class="lb-counter" id="lbCounter"></div>
+  </div>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8594;</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
+<script>
+  // ── Portfolio Data (dynamic via server) ──
+  let TABS = {};
+
+  async function loadPortfolio() {
+    try {
+      const res  = await fetch('/api/portfolio');
+      const data = await res.json();
+      TABS = data;
+      TABS.allwork = {
+        label: 'All Work',
+        images: Object.keys(data).flatMap(k => data[k].images),
+      };
+    } catch (e) {
+      console.warn('Portfolio API unavailable — running without images.', e.message);
+    }
+    buildTabContent(activeTab);
+  }
+
+  let LB_ITEMS  = [];
+  let lbIdx     = 0;
+  let activeTab = 'allwork';
+  let pfInstance = null;
+
+  // ── Layout A: Advertising & Digital ──
+  function buildLayoutA(data) {
+    const stack = document.getElementById('layaStack');
+    const side  = document.getElementById('layaSide');
+
+    stack.innerHTML = '';
+    const heroCount = Math.min(4, data.images.length);
+    for (let i = 0; i < heroCount; i++) {
+      const img = document.createElement('img');
+      img.src = data.images[i].src; img.alt = data.images[i].title;
+      img.className = 'laya-stack-img';
+      img.style.top = (i * Math.floor(100 / heroCount)) + '%';
+      img.loading = 'lazy';
+      stack.appendChild(img);
+    }
+
+    side.innerHTML = '';
+    data.images.slice(heroCount, heroCount + 3).forEach((item, i) => {
+      const img = document.createElement('img');
+      img.src = item.src; img.alt = item.title;
+      img.className = 'laya-side-img'; img.loading = 'lazy';
+      img.addEventListener('click', () => openLightbox(heroCount + i));
+      side.appendChild(img);
+    });
+
+    const grid = document.getElementById('instaGrid');
+    grid.innerHTML = '';
+    data.images.forEach((item, i) => {
+      const card = document.createElement('div');
+      card.className = 'insta-card';
+      card.innerHTML = `
+        <div class="insta-card-header">
+          <div class="insta-card-user">
+            <div class="insta-avatar"></div>
+            <span class="insta-username">nganngankim</span>
+          </div>
+          <div class="insta-actions-top">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </div>
+        </div>
+        <img src="${item.src}" alt="${item.title}" loading="lazy">
+        <div class="insta-card-footer">
+          <svg viewBox="0 0 24 24" fill="#ed4956" stroke="#ed4956" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </div>`;
+      card.addEventListener('click', () => openLightbox(i));
+      grid.appendChild(card);
+    });
+  }
+
+  // ── Layout B: Print & Editorial ──
+  function buildLayoutB(data) {
+    const wrap = document.getElementById('laybBookWrap');
+    wrap.innerHTML = '<div id="laybBook"></div>';
+    const book = document.getElementById('laybBook');
+
+    // ── Cover page (hard, full-bleed image + editorial text overlay) ──
+    const cover = document.createElement('div');
+    cover.className = 'magazine-page magazine-page-cover';
+    cover.setAttribute('data-density', 'hard');
+    const coverImgSrc = data.images.length > 0 ? data.images[0].src : '';
+    cover.innerHTML = `
+      <div class="mag-cover-img-bg">
+        ${coverImgSrc ? `<img src="${coverImgSrc}" alt="Cover" loading="lazy">` : ''}
+      </div>
+      <div class="mag-cover-content">
+        <div class="mag-cover-head">
+          <span class="mag-cover-label">Portfolio</span>
+          <span class="mag-cover-tag">2025</span>
+        </div>
+        <div class="mag-cover-mid">
+          <div class="mag-cover-title">Print &amp;<br>Editorial</div>
+          <div class="mag-cover-sub">Portfolio Collection</div>
+        </div>
+        <div class="mag-cover-foot">
+          <div class="mag-cover-issue">2025 Edition &nbsp;·&nbsp; Nguyen Kim Ngan</div>
+        </div>
+      </div>`;
+    book.appendChild(cover);
+
+    // ── Interior pages (full-bleed image + caption strip) ──
+    data.images.forEach((item, i) => {
+      const pg = document.createElement('div');
+      pg.className = 'magazine-page';
+      pg.innerHTML = `
+        <div class="magazine-page-spread">
+          <div class="magazine-page-spread-img" data-idx="${i}">
+            <img src="${item.src}" alt="${item.title}" loading="lazy">
+          </div>
+          <div class="magazine-page-caption">
+            <span class="mag-pg-title">${item.title}</span>
+            <span class="mag-pg-num">${String(i + 1).padStart(2, '0')}</span>
+          </div>
+        </div>`;
+      pg.querySelector('.magazine-page-spread-img').addEventListener('click', () => openLightbox(i));
+      book.appendChild(pg);
+    });
+
+    // ── Back cover (hard, minimal dark) ──
+    const back = document.createElement('div');
+    back.className = 'magazine-page magazine-page-back';
+    back.setAttribute('data-density', 'hard');
+    back.innerHTML = `
+      <div class="mag-back-icon">✦</div>
+      <div class="mag-back-title">Thank you<br>for viewing</div>
+      <div class="mag-back-sub">Nguyen Kim Ngan · Graphic Designer · 2025</div>`;
+    book.appendChild(back);
+
+    pfInstance = new St.PageFlip(book, {
+      width: 550, height: 700, size: 'stretch',
+      minWidth: 400, maxWidth: 600, minHeight: 500, maxHeight: 750,
+      showCover: true, drawShadow: true,
+      maxShadowOpacity: 0.4, flippingTime: 800,
+      usePortrait: window.innerWidth < 768, mobileScrollSupport: true
+    });
+    pfInstance.loadFromHTML(book.querySelectorAll('.magazine-page'));
+    pfInstance.on('flip', updateLaybIndicator);
+    pfInstance.on('changeState', updateLaybIndicator);
+    updateLaybIndicator();
+
+    const sceneGrid = document.getElementById('sceneGrid');
+    sceneGrid.innerHTML = '';
+    data.images.forEach((item, i) => {
+      const card = document.createElement('div');
+      card.className = 'scene-card';
+      card.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">`;
+      card.addEventListener('click', () => openLightbox(i));
+      sceneGrid.appendChild(card);
+    });
+  }
+
+  function updateLaybIndicator() {
+    if (!pfInstance) return;
+    const curr  = pfInstance.getCurrentPageIndex() + 1;
+    const total = pfInstance.getPageCount();
+    document.getElementById('laybIndicator').textContent = `Page ${curr} / ${total}`;
+    document.getElementById('laybPrev').disabled = curr <= 1;
+    document.getElementById('laybNext').disabled = curr >= total;
+  }
+
+  // ── Layout C: Simple Grid ──
+  const GRID_IDS = { allwork:'allWorkGrid', branding:'brandingGrid', featured:'featuredGrid', playground:'playgroundGrid' };
+  function buildLayoutC(tab, data) {
+    const grid = document.getElementById(GRID_IDS[tab]);
+    if (!grid) return;
+    grid.innerHTML = '';
+    if (!data.images.length) {
+      grid.innerHTML = '<div class="tab-empty"><p>Coming soon.</p></div>';
+      return;
+    }
+    data.images.forEach((item, i) => {
+      const card = document.createElement('div');
+      card.className = 'layc-card';
+      card.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">
+        <div class="layc-overlay">
+          <div class="layc-overlay-title">${item.title}</div>
+          <div class="layc-overlay-cat">${data.label}</div>
+        </div>`;
+      card.addEventListener('click', () => openLightbox(i));
+      grid.appendChild(card);
+    });
+  }
+
+  // ── Tab Switching ──
+  function buildTabContent(tab) {
+    const data = TABS[tab];
+    LB_ITEMS = data.images;
+    if (tab === 'advertising')   buildLayoutA(data);
+    else if (tab === 'print')    buildLayoutB(data);
+    else                         buildLayoutC(tab, data);
+  }
+  function lbCaptionLabel(tab) { return TABS[tab] ? TABS[tab].label : tab; }
+
+  function switchTab(tab) {
+    if (tab === activeTab) return;
+    if (activeTab === 'print' && pfInstance) {
+      try { pfInstance.destroy(); } catch (e) {}
+      pfInstance = null;
+    }
+    activeTab = tab;
+    document.querySelectorAll('.port-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.dataset.panel === tab));
+    buildTabContent(tab);
+  }
+
+  document.querySelectorAll('.port-tab').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+  });
+  document.getElementById('laybPrev').addEventListener('click', () => { if (pfInstance) pfInstance.flipPrev(); });
+  document.getElementById('laybNext').addEventListener('click', () => { if (pfInstance) pfInstance.flipNext(); });
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('lightbox').classList.contains('open')) return;
+    if (activeTab === 'print' && pfInstance) {
+      if (e.key === 'ArrowRight') pfInstance.flipNext();
+      if (e.key === 'ArrowLeft')  pfInstance.flipPrev();
+    }
+  });
+
+  // ── Lightbox ──
+  const lb    = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCap = document.getElementById('lbCaption');
+  const lbCtr = document.getElementById('lbCounter');
+
+  function openLightbox(idx) {
+    lbIdx = idx;
+    updateLb();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function updateLb() {
+    const item = LB_ITEMS[lbIdx];
+    lbImg.src = item.src; lbImg.alt = item.title;
+    lbCap.innerHTML = item.title + '<em>' + TABS[activeTab].label + '</em>';
+    lbCtr.textContent = (lbIdx + 1) + ' / ' + LB_ITEMS.length;
+  }
+
+  function closeLb() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { lbImg.src = ''; }, 300);
+  }
+
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  document.getElementById('lbPrev').addEventListener('click', () => { lbIdx = (lbIdx - 1 + LB_ITEMS.length) % LB_ITEMS.length; updateLb(); });
+  document.getElementById('lbNext').addEventListener('click', () => { lbIdx = (lbIdx + 1) % LB_ITEMS.length; updateLb(); });
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')     closeLb();
+    if (e.key === 'ArrowLeft')  { lbIdx = (lbIdx - 1 + LB_ITEMS.length) % LB_ITEMS.length; updateLb(); }
+    if (e.key === 'ArrowRight') { lbIdx = (lbIdx + 1) % LB_ITEMS.length; updateLb(); }
+  });
+
+  // ── Scroll Animations ──
+  const fadeObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); fadeObserver.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade').forEach(el => fadeObserver.observe(el));
+
+  // ── Skill Bars ──
+  const skillObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.skill-bar').forEach(bar => {
+          bar.querySelector('.skill-fill').style.width = bar.dataset.pct + '%';
+        });
+        skillObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.25 });
+  document.querySelectorAll('.skills-group').forEach(el => skillObserver.observe(el));
+
+  // ── Nav Scroll ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── Mobile Nav ──
+  document.getElementById('navToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  // ── Init Portfolio ──
+  loadPortfolio();
+
+  // ── FOR YOU ──
+  (function () {
+    // Animal images
+    const ANIMALS = [
+      'smileAnimals/046fe0ae16299877c13830.jpg',
+      'smileAnimals/0c1faade5c59d2078b4813.jpg',
+      'smileAnimals/0ed17d138b9405ca5c8526.jpg',
+      'smileAnimals/120f76cf80480e16575912.jpg',
+      'smileAnimals/18c4b6054082cedc979311.jpg',
+      'smileAnimals/1920e47e12f99ca7c5e82.jpg',
+      'smileAnimals/1a2becea1a6d9433cd7c28.jpg',
+      'smileAnimals/1c0787c77140ff1ea65122.jpg',
+      'smileAnimals/1f797b258da203fc5ab31.jpg',
+      'smileAnimals/1f9de25c14db9a85c3ca18.jpg',
+      'smileAnimals/2273acb35a34d46a8d2517.jpg',
+      'smileAnimals/332ff8ef0e688036d97923.jpg',
+      'smileAnimals/3a0769c79f40111e48516.jpg',
+      'smileAnimals/4ada2f18d99f57c10e8e32.jpg',
+      'smileAnimals/4dbc607d96fa18a441eb24.jpg',
+      'smileAnimals/63c88109778ef9d0a09f29.jpg',
+      'smileAnimals/6cfd6f3d99ba17e44eab5.jpg',
+      'smileAnimals/7441fd810b068558dc1716.jpg',
+      'smileAnimals/8f0d7fcc894b07155e5a33.jpg',
+      'smileAnimals/99c65606a0812edf779019.jpg',
+      'smileAnimals/9f2d12ede46a6a34337b20.jpg',
+      'smileAnimals/b8ddbc1f4a98c4c69d8934.jpg',
+      'smileAnimals/bfa64169b7ee39b060ff7.jpg',
+      'smileAnimals/c3434083b604385a61158.jpg',
+      'smileAnimals/d2f01530e3b76de934a621.jpg',
+      'smileAnimals/d3a7d9662fe1a1bff8f09.jpg',
+      'smileAnimals/d3da771a819d0fc3568c14.jpg',
+      'smileAnimals/d81618d9ee5e6000394f3.jpg',
+      'smileAnimals/eaee2f21d9a657f80eb74.jpg',
+      'smileAnimals/ed0ee8ce1e499017c95810.jpg',
+      'smileAnimals/f0db9a1a6c9de2c3bb8c15.jpg',
+      'smileAnimals/f846ac845a03d45d8d1227.jpg',
+      'smileAnimals/fab6c57433f3bdade4e225.jpg',
+      'smileAnimals/fc438a817c06f258ab1731.jpg',
+    ];
+    let lastAnimalIdx = -1;
+
+    function pickAnimal() {
+      let idx;
+      do { idx = Math.floor(Math.random() * ANIMALS.length); }
+      while (idx === lastAnimalIdx && ANIMALS.length > 1);
+      lastAnimalIdx = idx;
+      return ANIMALS[idx];
+    }
+
+    function showAnimal() {
+      const img = document.getElementById('fyAnimal');
+      img.classList.remove('in');
+      img.src = pickAnimal();
+      img.onload = () => { requestAnimationFrame(() => img.classList.add('in')); };
+    }
+
+    const navFy    = document.getElementById('navForyou');
+    const gate     = document.getElementById('pwGate');
+    const pwInput  = document.getElementById('pwInput');
+    const pwErr    = document.getElementById('pwErr');
+    const pwSubmit = document.getElementById('pwSubmit');
+    const pwClose  = document.getElementById('pwClose');
+    const fyMsg    = document.getElementById('fyMsg');
+    const fyHeart  = document.getElementById('fyHeart');
+    const fyPetals = document.getElementById('fyPetals');
+    let revealed   = false;
+
+    navFy.addEventListener('click', e => {
+      e.preventDefault();
+      if (revealed) {
+        document.getElementById('foryou').scrollIntoView({ behavior: 'smooth' });
+        showAnimal();  // new random image each revisit
+        return;
+      }
+      gate.classList.add('open');
+      setTimeout(() => pwInput.focus(), 350);
+    });
+
+    function closeGate() {
+      gate.classList.remove('open');
+      pwInput.value = '';
+      pwErr.textContent = '';
+    }
+    pwClose.addEventListener('click', closeGate);
+    gate.addEventListener('click', e => { if (e.target === gate) closeGate(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && gate.classList.contains('open')) closeGate();
+    });
+
+    function checkPassword() {
+      if (pwInput.value === '0303') {
+        closeGate();
+        revealForyou();
+      } else {
+        pwErr.textContent = 'Sai mật khẩu rồi 😜';
+        pwInput.classList.remove('shake');
+        void pwInput.offsetWidth;
+        pwInput.classList.add('shake');
+        pwInput.value = '';
+        setTimeout(() => pwInput.classList.remove('shake'), 500);
+      }
+    }
+    pwSubmit.addEventListener('click', checkPassword);
+    pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') checkPassword(); });
+
+    function spawnPetals() {
+      const emojis = ['🌸','🌺','🌷','🌻','💮','🌼'];
+      for (let i = 0; i < 26; i++) {
+        const p = document.createElement('span');
+        p.className = 'petal';
+        p.textContent = emojis[i % emojis.length];
+        const size = 1.1 + Math.random() * 1.4;
+        const sway = (Math.random() - .5) * 180;
+        p.style.cssText = `left:${Math.random()*100}%;font-size:${size}rem;animation-duration:${5+Math.random()*5}s;animation-delay:${Math.random()*6}s;--sw:${sway}px`;
+        fyPetals.appendChild(p);
+      }
+    }
+
+    function launchConfetti() {
+      const palette = ['#e85d3a','#f5a623','#7ed321','#bd10e0','#4a90e2','#f9d94f','#ff6eb4','#fff'];
+      for (let i = 0; i < 100; i++) {
+        const c = document.createElement('div');
+        c.className = 'cft';
+        const size = 6 + Math.random() * 7;
+        const dx   = (Math.random() - .5) * 300;
+        const rot  = (Math.random() * 2 - 1) * 720 + 'deg';
+        c.style.cssText = `left:${Math.random()*100}vw;top:-8px;width:${size}px;height:${size}px;background:${palette[Math.floor(Math.random()*palette.length)]};animation-duration:${1.8+Math.random()*2.2}s;animation-delay:${Math.random()*.8}s;--dx:${dx}px;--rot:${rot};border-radius:${Math.random()>.5?'50%':'2px'}`;
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 5000);
+      }
+    }
+
+    function revealForyou() {
+      revealed = true;
+      fyMsg.innerHTML = 'Stay <span class="fy-happy">Happy</span>';
+      spawnPetals();
+      const fy = document.getElementById('foryou');
+      fy.classList.add('revealed');
+      setTimeout(() => fy.scrollIntoView({ behavior: 'smooth' }), 80);
+      setTimeout(() => {
+        fyMsg.classList.add('in');
+        fyHeart.classList.add('in');
+        setTimeout(showAnimal, 200);
+      }, 600);
+      setTimeout(launchConfetti, 800);
+    }
+  })();
+</script>
+</body>
+</html>
