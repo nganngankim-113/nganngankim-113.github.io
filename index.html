@@ -307,18 +307,18 @@
     @keyframes tabFade { from { opacity: 0; } to { opacity: 1; } }
 
     /* ── LAYOUT C — Simple Grid ── */
-    .layc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-    .layc-card { aspect-ratio: 1; border-radius: 0; overflow: hidden; background: var(--white); box-shadow: 0 1px 8px rgba(0,0,0,.04); cursor: pointer; position: relative; border: none; transition: transform .25s ease, box-shadow .25s ease; }
+    .layc-grid { columns: 4; column-gap: 1rem; }
+    .layc-card { break-inside: avoid; margin-bottom: 1rem; border-radius: 0; overflow: hidden; background: var(--white); box-shadow: 0 1px 8px rgba(0,0,0,.04); cursor: pointer; position: relative; border: none; transition: transform .25s ease, box-shadow .25s ease; }
     .layc-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,.06); }
-    .layc-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .layc-card img { width: 100%; display: block; }
     .layc-overlay { position: absolute; inset: 0; background: rgba(26,21,32,.72); opacity: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1rem; transition: opacity .25s; }
     .layc-card:hover .layc-overlay { opacity: 1; }
     .layc-overlay-title { font-size: .85rem; font-weight: 600; color: #fff; margin-bottom: .3rem; }
     .layc-overlay-cat { font-size: .68rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
 
     /* ── Responsive ── */
-    @media (max-width: 1100px) { .insta-grid { columns: 3; } .scene-grid { grid-template-columns: repeat(2, 1fr); } .layc-grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 768px) { .insta-grid { columns: 2; } .laya-phone { width: 150px; height: 300px; } .laya-side-imgs { max-width: 130px; } .layb-flip-stage { gap: .5rem; } .layb-nav-btn { width: 36px; height: 36px; font-size: .9rem; } .layc-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 1100px) { .insta-grid { columns: 3; } .scene-grid { grid-template-columns: repeat(2, 1fr); } .layc-grid { columns: 3; } }
+    @media (max-width: 768px) { .insta-grid { columns: 2; } .layc-grid { columns: 2; } }
     @media (max-width: 480px) { .scene-grid { grid-template-columns: 1fr; } .laya-hero { flex-direction: column; max-height: none; } .layc-grid { grid-template-columns: repeat(2, 1fr); } }
 
     /* ── LIGHTBOX ── */
@@ -399,6 +399,302 @@
       .hero-stats { grid-template-columns: 1fr 1fr; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
+
+
+
+/* ── PAGINATION ── */
+.pg-wrap {
+  display: flex; justify-content: center; align-items: center;
+  gap: .35rem; margin-top: 2rem;
+  /* Thoát khỏi masonry columns */
+  column-span: all;
+  break-before: column;
+  width: 100%;
+}
+.pg-btn {
+  min-width: 36px; height: 36px; padding: 0 .6rem;
+  border: 1px solid var(--border); background: var(--white);
+  color: var(--charcoal); font-size: .82rem; font-weight: 500;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all .2s; letter-spacing: .04em;
+}
+.pg-btn:hover:not(:disabled):not(.pg-active) { border-color: var(--charcoal); background: var(--charcoal); color: var(--offwhite); }
+.pg-btn.pg-active { background: var(--gold); border-color: var(--gold); color: #fff; cursor: default; }
+.pg-btn:disabled { opacity: .35; cursor: default; }
+.pg-dots { font-size: .82rem; color: var(--muted); padding: 0 .25rem; line-height: 36px; }
+
+/* ── PLAIN MASONRY GRID (Advertising tab) ── */
+.plain-masonry-grid {
+  columns: 4;
+  column-gap: 1rem;
+}
+.plain-masonry-card {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+  background: var(--white);
+  box-shadow: 0 1px 8px rgba(0,0,0,.04);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.plain-masonry-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,.08); }
+.plain-masonry-card img { width: 100%; display: block; }
+@media (max-width: 1100px) { .plain-masonry-grid { columns: 3; } }
+@media (max-width: 700px)  { .plain-masonry-grid { columns: 2; } }
+
+/* ── PRINT SUB-TABS ── */
+.print-subtabs {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--border);
+}
+.print-tab {
+  background: none;
+  border: none;
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  position: relative;
+  padding: .75rem 2rem .65rem;
+  transition: color .2s;
+}
+.print-tab:hover { color: var(--charcoal); }
+.print-tab.active { color: var(--charcoal); }
+.print-tab.active::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -1px;
+  width: 100%; height: 2px;
+  background: var(--gold);
+}
+
+/* ── MAGAZINE FLIPBOOK ── */
+.mag-section { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+
+.mag-book-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.mag-flip-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.mag-flip-btn {
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--charcoal);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.mag-flip-btn:hover:not(:disabled) { background: var(--gold); border-color: var(--gold); color: #fff; }
+.mag-flip-btn:disabled { opacity: .3; cursor: default; }
+.mag-flip-indicator {
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  min-width: 100px;
+  text-align: center;
+}
+
+.mag-book-stage {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem 0 0.25rem;
+}
+
+#magBook { background: transparent; }
+
+.mag-page {
+  background: #faf8f5;
+  font-family: 'Outfit', sans-serif;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.mag-page-cover {
+  height: 100%; box-sizing: border-box;
+  overflow: hidden; position: relative;
+  background: #000;
+}
+.mag-cover-bg { position: absolute; inset: 0; }
+.mag-cover-bg img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 1; }
+/* hide overlay elements — pure image cover */
+.mag-cover-overlay { display: none; }
+
+.mag-page-inner {
+  display: flex; flex-direction: column;
+  height: 100%; padding: 0;
+}
+.mag-page-img-wrap {
+  flex: 1; overflow: hidden; cursor: pointer;
+  position: relative;
+}
+.mag-page-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform .4s ease;
+}
+.mag-page-img-wrap:hover img { transform: none; }
+.mag-page-footer {
+  padding: .5rem .8rem .35rem;
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-top: 1px solid rgba(0,0,0,.06);
+  flex-shrink: 0;
+  background: #faf8f5;
+}
+.mag-page-name { font-family: 'Cormorant Garamond', serif; font-size: .78rem; font-weight: 600; color: var(--charcoal); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 80%; }
+.mag-page-num  { font-size: .52rem; color: var(--muted); letter-spacing: .1em; flex-shrink: 0; }
+
+.mag-page-back {
+  height: 100%; box-sizing: border-box;
+  overflow: hidden; position: relative;
+  background: #000;
+}
+/* back cover shows pure image — all text/overlay hidden */
+.mag-back-pos { display: none; }
+
+/* ── MOCKUP GRID ── */
+.mag-mockup-section { width: 100%; margin-top: .5rem; }
+.mag-mockup-divider {
+  display: flex; align-items: center; gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+.mag-mockup-divider span {
+  font-size: .68rem; font-weight: 500; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--muted); white-space: nowrap;
+}
+.mag-mockup-divider::before,
+.mag-mockup-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.mag-mockup-grid {
+  columns: 4;
+  column-gap: 1rem;
+}
+.mag-mockup-card {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: 0 1px 8px rgba(0,0,0,.05);
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.mag-mockup-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,.08); }
+.mag-mockup-card img { width: 100%; display: block; }
+
+/* ── STANDEE / TENTCARD GRID ── */
+.print-simple-grid {
+  columns: 4;
+  column-gap: 1rem;
+}
+.print-simple-card {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+  background: var(--white);
+  box-shadow: 0 1px 8px rgba(0,0,0,.04);
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.print-simple-card:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(0,0,0,.08); }
+.print-simple-card img { width: 100%; display: block; background: #f7f5f2; transition: transform .35s ease; }
+.print-simple-card:hover img { transform: scale(1.04); }
+
+@media (max-width: 900px) {
+  .mag-mockup-grid { columns: 3; }
+  .print-simple-grid { columns: 3; }
+}
+@media (max-width: 600px) {
+  .mag-mockup-grid { columns: 2; }
+  .print-simple-grid { columns: 2; }
+}
+
+
+/* ── MOCKUP ZOOM MODAL ── */
+.mockup-zoom-modal {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(10,10,10,.92);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s;
+}
+.mockup-zoom-modal.open { opacity: 1; pointer-events: all; }
+
+.mzm-inner {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 1rem;
+  width: 90vw; max-width: 900px;
+}
+
+.mzm-close {
+  position: absolute; top: -2.5rem; right: 0;
+  background: none; border: none; color: #fff;
+  font-size: 1.4rem; cursor: pointer; opacity: .6;
+  transition: opacity .2s, color .2s; line-height: 1;
+}
+.mzm-close:hover { opacity: 1; color: var(--gold); }
+
+.mzm-img-wrap {
+  overflow: hidden;
+  cursor: grab;
+  width: 100%;
+  display: flex; align-items: center; justify-content: center;
+  max-height: 78vh;
+}
+.mzm-img-wrap:active { cursor: grabbing; }
+.mzm-img-wrap img {
+  max-width: 100%; max-height: 78vh;
+  object-fit: contain; display: block;
+  transform-origin: center center;
+  transition: transform .2s ease;
+  user-select: none; pointer-events: none;
+}
+
+.mzm-controls {
+  display: flex; align-items: center; gap: 1rem;
+}
+.mzm-btn {
+  width: 38px; height: 38px;
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(255,255,255,.08);
+  color: #fff; font-size: 1.1rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background .2s, border-color .2s;
+  border-radius: 0;
+}
+.mzm-btn:hover { background: var(--gold); border-color: var(--gold); }
+.mzm-zoom-pct {
+  font-size: .75rem; font-weight: 500; letter-spacing: .08em;
+  color: rgba(255,255,255,.6); min-width: 48px; text-align: center;
+}
+.mzm-hint {
+  font-size: .65rem; color: rgba(255,255,255,.25);
+  letter-spacing: .1em; text-transform: uppercase;
+}
+
   </style>
 </head>
 <body>
@@ -616,54 +912,39 @@
 
   <div class="port-tabs fade">
     <button class="port-tab active" data-tab="allwork">All</button>
+    <button class="port-tab" data-tab="featured">Featured Projects</button>
     <button class="port-tab" data-tab="advertising">Advertising &amp; Digital</button>
     <button class="port-tab" data-tab="print">Print &amp; Editorial</button>
     <button class="port-tab" data-tab="branding">Branding &amp; Packaging</button>
-    <button class="port-tab" data-tab="featured">Featured Projects</button>
     <button class="port-tab" data-tab="playground">Playground</button>
   </div>
 
   <div id="portContent">
     <div class="tab-panel active" data-panel="allwork">
-      <div class="layc-grid" id="allWorkGrid"></div>
+      <div id="allWorkGrid"></div>
     </div>
     <div class="tab-panel" data-panel="advertising">
-      <div class="laya-hero">
-        <div class="laya-phone">
-          <div class="laya-phone-screen">
-            <div class="laya-stack" id="layaStack"></div>
-          </div>
-        </div>
-        <div class="laya-side-imgs" id="layaSide"></div>
-      </div>
-      <div class="insta-grid" id="instaGrid"></div>
+      <div id="advertisingGrid"></div>
     </div>
     <div class="tab-panel" data-panel="print">
-      <div class="layb-flipbook">
-        <div class="layb-flip-stage">
-          <button class="layb-nav-btn" id="laybPrev" disabled>&#8592;</button>
-          <div class="magazine-book-container">
-            <div class="magazine-book-inner">
-              <div class="layb-book-wrap" id="laybBookWrap">
-                <div id="laybBook"></div>
-              </div>
-            </div>
-            <div class="magazine-surface-shadow"></div>
-          </div>
-          <button class="layb-nav-btn" id="laybNext">&#8594;</button>
-        </div>
-        <div class="layb-indicator" id="laybIndicator"></div>
-      </div>
-      <div class="scene-grid" id="sceneGrid"></div>
+  <div class="print-subtabs">
+  <button class="print-tab active" data-print="magazine">Magazine</button>
+  <button class="print-tab" data-print="standee">Standee</button>
+  <button class="print-tab" data-print="tentcard">Flyer</button>
+</div>
+
+<div id="printContent"></div>
+
+
     </div>
     <div class="tab-panel" data-panel="branding">
-      <div class="layc-grid" id="brandingGrid"></div>
+      <div id="brandingGrid"></div>
     </div>
     <div class="tab-panel" data-panel="featured">
-      <div class="layc-grid" id="featuredGrid"></div>
+      <div id="featuredGrid"></div>
     </div>
     <div class="tab-panel" data-panel="playground">
-      <div class="layc-grid" id="playgroundGrid"></div>
+      <div id="playgroundGrid"></div>
     </div>
   </div>
 </section>
@@ -757,165 +1038,307 @@
   let lbIdx     = 0;
   let activeTab = 'allwork';
   let pfInstance = null;
+  let activePrintTab = 'magazine';
+
+
 
   function buildLayoutA(data) {
-    const stack = document.getElementById('layaStack');
-    const side  = document.getElementById('layaSide');
-
-    stack.innerHTML = '';
-    const heroCount = Math.min(4, data.images.length);
-    for (let i = 0; i < heroCount; i++) {
-      const img = document.createElement('img');
-      img.src = data.images[i].src; img.alt = data.images[i].title;
-      img.className = 'laya-stack-img';
-      img.style.top = (i * Math.floor(100 / heroCount)) + '%';
-      img.loading = 'lazy';
-      stack.appendChild(img);
-    }
-
-    side.innerHTML = '';
-    data.images.slice(heroCount, heroCount + 3).forEach((item, i) => {
-      const img = document.createElement('img');
-      img.src = item.src; img.alt = item.title;
-      img.className = 'laya-side-img'; img.loading = 'lazy';
-      img.addEventListener('click', () => openLightbox(heroCount + i));
-      side.appendChild(img);
-    });
-
-    const grid = document.getElementById('instaGrid');
-    grid.innerHTML = '';
-    data.images.forEach((item, i) => {
-      const card = document.createElement('div');
-      card.className = 'insta-card';
-      card.innerHTML = `
-        <div class="insta-card-header">
-          <div class="insta-card-user">
-            <div class="insta-avatar"></div>
-            <span class="insta-username">nganngankim</span>
-          </div>
-          <div class="insta-actions-top">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          </div>
-        </div>
-        <img src="${item.src}" alt="${item.title}" loading="lazy">
-        <div class="insta-card-footer">
-          <svg viewBox="0 0 24 24" fill="#ed4956" stroke="#ed4956" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </div>`;
-      card.addEventListener('click', () => openLightbox(i));
-      grid.appendChild(card);
-    });
+    LB_ITEMS = data.images;
+    buildMasonryGrid('advertisingGrid', data.images, 'advertising');
   }
 
   function buildLayoutB(data) {
-    const wrap = document.getElementById('laybBookWrap');
-    wrap.innerHTML = '<div id="laybBook"></div>';
-    const book = document.getElementById('laybBook');
+    if (!data) return;
+    const container = document.getElementById('printContent');
+    if (!container) return;
 
-    const cover = document.createElement('div');
-    cover.className = 'magazine-page magazine-page-cover';
-    cover.setAttribute('data-density', 'hard');
-    const coverImgSrc = data.images.length > 0 ? data.images[0].src : '';
-    cover.innerHTML = `
-      <div class="mag-cover-img-bg">
-        ${coverImgSrc ? `<img src="${coverImgSrc}" alt="Cover" loading="lazy">` : ''}
-      </div>
-      <div class="mag-cover-content">
-        <div class="mag-cover-head">
-          <span class="mag-cover-label">Portfolio</span>
-          <span class="mag-cover-tag">2025</span>
-        </div>
-        <div class="mag-cover-mid">
-          <div class="mag-cover-title">Print &amp;<br>Editorial</div>
-          <div class="mag-cover-sub">Portfolio Collection</div>
-        </div>
-        <div class="mag-cover-foot">
-          <div class="mag-cover-issue">2025 Edition &nbsp;·&nbsp; Nguyen Kim Ngan</div>
-        </div>
-      </div>`;
-    book.appendChild(cover);
+    // Partition images by type tag (set by build-portfolio.js)
+    const coverImgs   = data.images.filter(i => i.type === 'cover');
+    const backImgs    = data.images.filter(i => i.type === 'back');
+    const pageImgs    = data.images.filter(i => i.type === 'page');
+    const mockupImgs  = data.images.filter(i => i.type === 'mockup');
+    const standeeImgs = data.images.filter(i => i.type === 'standee');
+    const tentImgs    = data.images.filter(i => i.type === 'tentcard');
 
-    data.images.forEach((item, i) => {
-      const pg = document.createElement('div');
-      pg.className = 'magazine-page';
-      pg.innerHTML = `
-        <div class="magazine-page-spread">
-          <div class="magazine-page-spread-img" data-idx="${i}">
-            <img src="${item.src}" alt="${item.title}" loading="lazy">
+    container.innerHTML = '';
+
+    /* ────────────────────────────────────────────
+       MAGAZINE sub-tab
+    ──────────────────────────────────────────── */
+    if (activePrintTab === 'magazine') {
+      // LB shows page images + mockups
+      const allMagImgs = [...pageImgs, ...mockupImgs];
+      LB_ITEMS = allMagImgs;
+
+      container.innerHTML = `
+        <div class="mag-section">
+          <div class="mag-book-wrapper">
+            <div class="mag-book-stage">
+              <div id="magBook"></div>
+            </div>
+            <div class="mag-flip-controls">
+              <button class="mag-flip-btn" id="magPrev" disabled>&#8592;</button>
+              <div class="mag-flip-indicator" id="magIndicator">Page 1</div>
+              <button class="mag-flip-btn" id="magNext">&#8594;</button>
+            </div>
           </div>
-          <div class="magazine-page-caption">
-            <span class="mag-pg-title">${item.title}</span>
-            <span class="mag-pg-num">${String(i + 1).padStart(2, '0')}</span>
-          </div>
+          <div class="mag-mockup-section" id="magMockupSection"></div>
         </div>`;
-      pg.querySelector('.magazine-page-spread-img').addEventListener('click', () => openLightbox(i));
-      book.appendChild(pg);
-    });
 
-    const back = document.createElement('div');
-    back.className = 'magazine-page magazine-page-back';
-    back.setAttribute('data-density', 'hard');
-    back.innerHTML = `
-      <div class="mag-back-icon">✦</div>
-      <div class="mag-back-title">Thank you<br>for viewing</div>
-      <div class="mag-back-sub">Nguyen Kim Ngan · Graphic Designer · 2025</div>`;
-    book.appendChild(back);
+      // ── Build pages for StPageFlip ──
+      const book = document.getElementById('magBook');
 
-    pfInstance = new St.PageFlip(book, {
-      width: 550, height: 700, size: 'stretch',
-      minWidth: 400, maxWidth: 600, minHeight: 500, maxHeight: 750,
-      showCover: true, drawShadow: true,
-      maxShadowOpacity: 0.4, flippingTime: 800,
-      usePortrait: window.innerWidth < 768, mobileScrollSupport: true
-    });
-    pfInstance.loadFromHTML(book.querySelectorAll('.magazine-page'));
-    pfInstance.on('flip', updateLaybIndicator);
-    pfInstance.on('changeState', updateLaybIndicator);
-    updateLaybIndicator();
+      // COVER
+      const coverEl = document.createElement('div');
+      coverEl.className = 'mag-page mag-page-cover';
+      coverEl.setAttribute('data-density', 'hard');
+      const coverSrc = coverImgs.length ? coverImgs[0].src : (pageImgs[0] ? pageImgs[0].src : '');
+      coverEl.innerHTML = coverSrc
+        ? `<div class="mag-cover-bg"><img src="${coverSrc}" alt="Cover" loading="lazy"></div>`
+        : `<div style="width:100%;height:100%;background:#111;"></div>`;
+      book.appendChild(coverEl);
 
-    const sceneGrid = document.getElementById('sceneGrid');
-    sceneGrid.innerHTML = '';
-    data.images.forEach((item, i) => {
-      const card = document.createElement('div');
-      card.className = 'scene-card';
-      card.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">`;
-      card.addEventListener('click', () => openLightbox(i));
-      sceneGrid.appendChild(card);
-    });
-  }
+      // INNER PAGES
+      pageImgs.forEach((item, i) => {
+        const pg = document.createElement('div');
+        pg.className = 'mag-page';
+        pg.innerHTML = `
+          <div class="mag-page-inner">
+            <div class="mag-page-img-wrap" data-lbidx="${i}">
+              <img src="${item.src}" alt="${item.title}" loading="lazy">
+            </div>
+          </div>`;
+        pg.querySelector('.mag-page-img-wrap').addEventListener('click', () => openLightbox(i));
+        book.appendChild(pg);
+      });
 
-  function updateLaybIndicator() {
+      // BACK COVER
+      const backEl = document.createElement('div');
+      backEl.className = 'mag-page mag-page-back';
+      backEl.setAttribute('data-density', 'hard');
+      const backSrc = backImgs.length ? backImgs[0].src : '';
+      backEl.innerHTML = backSrc
+        ? `<div class="mag-cover-bg"><img src="${backSrc}" alt="Back Cover" loading="lazy"></div>`
+        : `<div style="width:100%;height:100%;background:#111;"></div>`;
+      book.appendChild(backEl);
+
+      // Init StPageFlip
+      pfInstance = new St.PageFlip(book, {
+        width: 320, height: 420,
+        size: 'stretch',
+        minWidth: 240, maxWidth: 380,
+        minHeight: 300, maxHeight: 490,
+        showCover: true,
+        drawShadow: true,
+        maxShadowOpacity: 0.35,
+        flippingTime: 750,
+        usePortrait: window.innerWidth < 700,
+        mobileScrollSupport: true,
+        swipeDistance: 30,
+      });
+      pfInstance.loadFromHTML(book.querySelectorAll('.mag-page'));
+      pfInstance.on('flip', updateMagIndicator);
+      pfInstance.on('changeState', updateMagIndicator);
+      updateMagIndicator();
+
+      document.getElementById('magPrev').onclick = () => pfInstance && pfInstance.flipPrev();
+      document.getElementById('magNext').onclick = () => pfInstance && pfInstance.flipNext();
+
+      // ── Mockup grid ──
+      const mockupSection = document.getElementById('magMockupSection');
+      if (mockupImgs.length) {
+        mockupSection.innerHTML = `<div class="mag-mockup-divider"><span>Mockups</span></div><div id="magMockupGridWrap"></div>`;
+        function renderMockupPage(pg) {
+          const wrap = document.getElementById('magMockupGridWrap');
+          if (!wrap) return;
+          const perPage = 12;
+          const totalPg = Math.ceil(mockupImgs.length / perPage);
+          const slice = mockupImgs.slice((pg - 1) * perPage, pg * perPage);
+          const grid = document.createElement('div');
+          grid.className = 'mag-mockup-grid';
+          slice.forEach((item) => {
+            const card = document.createElement('div');
+            card.className = 'mag-mockup-card';
+            card.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">`;
+            card.addEventListener('click', () => { LB_ITEMS = mockupImgs; openLightbox(mockupImgs.indexOf(item)); });
+            grid.appendChild(card);
+          });
+          wrap.innerHTML = '';
+          wrap.appendChild(grid);
+          if (totalPg > 1) {
+            const pgWrap = buildPagination(pg, totalPg, (newPg) => renderMockupPage(newPg));
+            wrap.appendChild(pgWrap); // outside grid
+          }
+        }
+        renderMockupPage(1);
+      }
+
+    /* ────────────────────────────────────────────
+       STANDEE sub-tab
+    ──────────────────────────────────────────── */
+    } else if (activePrintTab === 'standee') {
+      LB_ITEMS = standeeImgs;
+      if (!standeeImgs.length) { container.innerHTML = '<div class="tab-empty"><p>Coming soon.</p></div>'; return; }
+      const sdWrap = document.createElement('div'); sdWrap.id = 'standeeWrap'; container.appendChild(sdWrap);
+      function renderStandeePage(pg) {
+        const w = document.getElementById('standeeWrap'); if (!w) return;
+        const perPage = 12; const totalPg = Math.ceil(standeeImgs.length / perPage);
+        const slice = standeeImgs.slice((pg-1)*perPage, pg*perPage);
+        w.innerHTML = '';
+        const grid = document.createElement('div'); grid.className = 'print-simple-grid';
+        slice.forEach((item, i) => {
+          const card = document.createElement('div'); card.className = 'print-simple-card';
+          card.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">`;
+          card.addEventListener('click', () => { LB_ITEMS = standeeImgs; openLightbox((pg-1)*perPage + i); });
+          grid.appendChild(card);
+        });
+        w.appendChild(grid); // grid first
+        if (totalPg > 1) w.appendChild(buildPagination(pg, totalPg, renderStandeePage)); // pagination outside grid
+      }
+      renderStandeePage(1);
+
+    /* ── FLYER sub-tab ── */
+    } else {
+      LB_ITEMS = tentImgs;
+      if (!tentImgs.length) { container.innerHTML = '<div class="tab-empty"><p>Coming soon.</p></div>'; return; }
+      const tcWrap = document.createElement('div'); tcWrap.id = 'tentcardWrap'; container.appendChild(tcWrap);
+      function renderFlyerPage(pg) {
+        const w = document.getElementById('tentcardWrap'); if (!w) return;
+        const perPage = 12; const totalPg = Math.ceil(tentImgs.length / perPage);
+        const slice = tentImgs.slice((pg-1)*perPage, pg*perPage);
+        w.innerHTML = '';
+        const grid = document.createElement('div'); grid.className = 'print-simple-grid';
+        slice.forEach((item, i) => {
+          const card = document.createElement('div'); card.className = 'print-simple-card';
+          card.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">`;
+          card.addEventListener('click', () => { LB_ITEMS = tentImgs; openLightbox((pg-1)*perPage + i); });
+          grid.appendChild(card);
+        });
+        w.appendChild(grid);
+        if (totalPg > 1) w.appendChild(buildPagination(pg, totalPg, renderFlyerPage));
+      }
+      renderFlyerPage(1);
+    }
+  } // end buildLayoutB
+
+  function updateMagIndicator() {
     if (!pfInstance) return;
     const curr  = pfInstance.getCurrentPageIndex() + 1;
     const total = pfInstance.getPageCount();
-    document.getElementById('laybIndicator').textContent = `Page ${curr} / ${total}`;
-    document.getElementById('laybPrev').disabled = curr <= 1;
-    document.getElementById('laybNext').disabled = curr >= total;
+    const indEl = document.getElementById('magIndicator');
+    const prevEl = document.getElementById('magPrev');
+    const nextEl = document.getElementById('magNext');
+    if (indEl)  indEl.textContent  = `${curr} / ${total}`;
+    if (prevEl) prevEl.disabled = curr <= 1;
+    if (nextEl) nextEl.disabled = curr >= total;
+  }
+
+
+  const PAGE_SIZE = 12;
+  const pageState = {}; // track current page per tab
+
+  // Generic masonry builder with pagination (>12 items)
+  // Strategy: use a parent wrapper div; inside = masonry grid div + pagination div (siblings)
+  function buildMasonryGrid(containerId, images, tab, cardClass) {
+    cardClass = cardClass || 'plain-masonry-card';
+    // The element in HTML is just a mount point — we replace its contents
+    const mount = document.getElementById(containerId);
+    if (!mount) return;
+
+    // Determine correct masonry class based on which tab
+    const gridClass = (cardClass === 'layc-card') ? 'layc-grid' : 'plain-masonry-grid';
+
+    const pg = pageState[tab] || 1;
+    const total = images.length;
+    const totalPages = Math.ceil(total / PAGE_SIZE);
+    const slice = images.slice((pg - 1) * PAGE_SIZE, pg * PAGE_SIZE);
+
+    mount.innerHTML = '';
+    if (!total) {
+      mount.innerHTML = '<div class="tab-empty"><p>Coming soon.</p></div>';
+      return;
+    }
+
+    // 1. Masonry grid div
+    const grid = document.createElement('div');
+    grid.className = gridClass;
+
+    slice.forEach((item, i) => {
+      const globalIdx = (pg - 1) * PAGE_SIZE + i;
+      const card = document.createElement('div');
+      card.className = cardClass;
+      if (cardClass === 'layc-card') {
+        card.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">
+          <div class="layc-overlay">
+            <div class="layc-overlay-title">${item.title}</div>
+            <div class="layc-overlay-cat">${item.title}</div>
+          </div>`;
+      } else {
+        card.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">`;
+      }
+      card.addEventListener('click', () => {
+        LB_ITEMS = images;
+        openLightbox(globalIdx);
+      });
+      grid.appendChild(card);
+    });
+    mount.appendChild(grid);
+
+    // 2. Pagination — sibling of grid, NOT inside it
+    if (totalPages > 1) {
+      const pgWrap = buildPagination(pg, totalPages, (newPg) => {
+        pageState[tab] = newPg;
+        buildMasonryGrid(containerId, images, tab, cardClass);
+      });
+      mount.appendChild(pgWrap);
+    }
+  }
+
+  function buildPagination(current, total, onClick) {
+    const wrap = document.createElement('div');
+    wrap.className = 'pg-wrap';
+
+    const prev = document.createElement('button');
+    prev.className = 'pg-btn'; prev.textContent = '←';
+    prev.disabled = current <= 1;
+    prev.onclick = () => onClick(current - 1);
+    wrap.appendChild(prev);
+
+    // Build page numbers with ellipsis
+    const pages = [];
+    for (let p = 1; p <= total; p++) {
+      if (p === 1 || p === total || (p >= current - 1 && p <= current + 1)) {
+        pages.push(p);
+      } else if (pages[pages.length - 1] !== '…') {
+        pages.push('…');
+      }
+    }
+    pages.forEach(p => {
+      if (p === '…') {
+        const d = document.createElement('span');
+        d.className = 'pg-dots'; d.textContent = '…';
+        wrap.appendChild(d);
+      } else {
+        const btn = document.createElement('button');
+        btn.className = 'pg-btn' + (p === current ? ' pg-active' : '');
+        btn.textContent = p;
+        btn.onclick = () => onClick(p);
+        wrap.appendChild(btn);
+      }
+    });
+
+    const next = document.createElement('button');
+    next.className = 'pg-btn'; next.textContent = '→';
+    next.disabled = current >= total;
+    next.onclick = () => onClick(current + 1);
+    wrap.appendChild(next);
+    return wrap;
   }
 
   const GRID_IDS = { allwork:'allWorkGrid', branding:'brandingGrid', featured:'featuredGrid', playground:'playgroundGrid' };
   function buildLayoutC(tab, data) {
-    const grid = document.getElementById(GRID_IDS[tab]);
-    if (!grid) return;
-    grid.innerHTML = '';
-    if (!data.images.length) {
-      grid.innerHTML = '<div class="tab-empty"><p>Coming soon.</p></div>';
-      return;
-    }
-    data.images.forEach((item, i) => {
-      const card = document.createElement('div');
-      card.className = 'layc-card';
-      card.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">
-        <div class="layc-overlay">
-          <div class="layc-overlay-title">${item.title}</div>
-          <div class="layc-overlay-cat">${data.label}</div>
-        </div>`;
-      card.addEventListener('click', () => openLightbox(i));
-      grid.appendChild(card);
-    });
+    LB_ITEMS = data.images;
+    buildMasonryGrid(GRID_IDS[tab], data.images, tab, 'layc-card');
   }
 
   function buildTabContent(tab) {
@@ -932,6 +1355,8 @@
       try { pfInstance.destroy(); } catch (e) {}
       pfInstance = null;
     }
+    // Reset page to 1 on tab switch
+    pageState[tab] = 1;
     activeTab = tab;
     document.querySelectorAll('.port-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.dataset.panel === tab));
@@ -941,8 +1366,22 @@
   document.querySelectorAll('.port-tab').forEach(btn => {
     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
-  document.getElementById('laybPrev').addEventListener('click', () => { if (pfInstance) pfInstance.flipPrev(); });
-  document.getElementById('laybNext').addEventListener('click', () => { if (pfInstance) pfInstance.flipNext(); });
+
+document.querySelectorAll('.print-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    activePrintTab = btn.dataset.print;
+
+    document.querySelectorAll('.print-tab')
+      .forEach(b => b.classList.remove('active'));
+
+    btn.classList.add('active');
+
+    buildLayoutB(TABS['print']);
+  });
+});
+
+  
+
   document.addEventListener('keydown', e => {
     if (document.getElementById('lightbox').classList.contains('open')) return;
     if (activeTab === 'print' && pfInstance) {
@@ -1022,6 +1461,72 @@
 
   // ── Init Portfolio ──
   loadPortfolio();
+
+  // ── Mockup Zoom Modal ──
+  (function() {
+    const modal   = document.getElementById('mockupZoomModal');
+    const mzmImg  = document.getElementById('mzmImg');
+    const mzmPct  = document.getElementById('mzmPct');
+    const wrap    = document.getElementById('mzmImgWrap');
+    let scale = 1;
+    let panX = 0, panY = 0;
+    let dragging = false, startX, startY, startPanX, startPanY;
+
+    function applyTransform() {
+      mzmImg.style.transform = `scale(${scale}) translate(${panX/scale}px, ${panY/scale}px)`;
+      mzmPct.textContent = Math.round(scale * 100) + '%';
+    }
+
+    window.openMockupZoom = function(src, alt) {
+      mzmImg.src = src; mzmImg.alt = alt || '';
+      scale = 1; panX = 0; panY = 0;
+      applyTransform();
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    function close() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('mzmClose').onclick = close;
+    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+
+    document.getElementById('mzmZoomIn').onclick  = () => { scale = Math.min(scale + 0.25, 5); applyTransform(); };
+    document.getElementById('mzmZoomOut').onclick = () => { scale = Math.max(scale - 0.25, 0.25); applyTransform(); };
+    document.getElementById('mzmReset').onclick   = () => { scale = 1; panX = 0; panY = 0; applyTransform(); };
+
+    // Scroll wheel zoom
+    wrap.addEventListener('wheel', e => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.15 : -0.15;
+      scale = Math.min(Math.max(scale + delta, 0.25), 5);
+      applyTransform();
+    }, { passive: false });
+
+    // Drag to pan
+    wrap.addEventListener('mousedown', e => {
+      dragging = true; startX = e.clientX; startY = e.clientY;
+      startPanX = panX; startPanY = panY;
+      wrap.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      panX = startPanX + (e.clientX - startX);
+      panY = startPanY + (e.clientY - startY);
+      applyTransform();
+    });
+    window.addEventListener('mouseup', () => { dragging = false; wrap.style.cursor = 'grab'; });
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === '+' || e.key === '=') { scale = Math.min(scale + 0.25, 5); applyTransform(); }
+      if (e.key === '-') { scale = Math.max(scale - 0.25, 0.25); applyTransform(); }
+      if (e.key === '0') { scale = 1; panX = 0; panY = 0; applyTransform(); }
+    });
+  })();
+
 </script>
-</body>
-</html>
