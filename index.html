@@ -914,7 +914,7 @@
     <button class="port-tab active" data-tab="allwork">All</button>
     <button class="port-tab" data-tab="featured">Featured Projects</button>
     <button class="port-tab" data-tab="advertising">Advertising &amp; Digital</button>
-    <button class="port-tab" data-tab="print">Print &amp; Editorial</button>
+    <button class="port-tab" data-tab="print">Print &amp; Collateral</button>
     <button class="port-tab" data-tab="branding">Branding &amp; Packaging</button>
     <button class="port-tab" data-tab="playground">Playground</button>
   </div>
@@ -928,9 +928,9 @@
     </div>
     <div class="tab-panel" data-panel="print">
   <div class="print-subtabs">
-  <button class="print-tab active" data-print="magazine">Magazine</button>
-  <button class="print-tab" data-print="standee">Standee</button>
-  <button class="print-tab" data-print="tentcard">Flyer</button>
+  <button class="print-tab active" data-print="editorial">Editorial</button>
+  <button class="print-tab" data-print="posm">POSM &amp; Display</button>
+  <button class="print-tab" data-print="cards">Cards &amp; Prints</button>
 </div>
 
 <div id="printContent"></div>
@@ -1038,7 +1038,7 @@
   let lbIdx     = 0;
   let activeTab = 'allwork';
   let pfInstance = null;
-  let activePrintTab = 'magazine';
+  let activePrintTab = 'editorial';
 
 
 
@@ -1053,20 +1053,22 @@
     if (!container) return;
 
     // Partition images by type tag (set by build-portfolio.js)
-    const coverImgs   = data.images.filter(i => i.type === 'cover');
-    const backImgs    = data.images.filter(i => i.type === 'back');
-    const pageImgs    = data.images.filter(i => i.type === 'page');
-    const mockupImgs  = data.images.filter(i => i.type === 'mockup');
-    const standeeImgs = data.images.filter(i => i.type === 'standee');
-    const tentImgs    = data.images.filter(i => i.type === 'tentcard');
+    const editorialImgs = data.images.filter(i => i.type === 'editorial');
+    const posmImgs      = data.images.filter(i => i.type === 'posm');
+    const cardsImgs     = data.images.filter(i => i.type === 'cards');
+
+    // For editorial sub-tab: detect cover/back/page/mockup by filename prefix
+    const coverImgs  = editorialImgs.filter(i => /cover/i.test(i.title));
+    const backImgs   = editorialImgs.filter(i => /back/i.test(i.title));
+    const mockupImgs = editorialImgs.filter(i => /mockup/i.test(i.title));
+    const pageImgs   = editorialImgs.filter(i => !/cover|back|mockup/i.test(i.title));
 
     container.innerHTML = '';
 
     /* ────────────────────────────────────────────
-       MAGAZINE sub-tab
+       EDITORIAL sub-tab (magazine flipbook)
     ──────────────────────────────────────────── */
-    if (activePrintTab === 'magazine') {
-      // LB shows page images + mockups
+    if (activePrintTab === 'editorial') {
       const allMagImgs = [...pageImgs, ...mockupImgs];
       LB_ITEMS = allMagImgs;
 
@@ -1085,7 +1087,6 @@
           <div class="mag-mockup-section" id="magMockupSection"></div>
         </div>`;
 
-      // ── Build pages for StPageFlip ──
       const book = document.getElementById('magBook');
 
       // COVER
@@ -1144,7 +1145,7 @@
       document.getElementById('magPrev').onclick = () => pfInstance && pfInstance.flipPrev();
       document.getElementById('magNext').onclick = () => pfInstance && pfInstance.flipNext();
 
-      // ── Mockup grid ──
+      // Mockup grid
       const mockupSection = document.getElementById('magMockupSection');
       if (mockupImgs.length) {
         mockupSection.innerHTML = `<div class="mag-mockup-divider"><span>Mockups</span></div><div id="magMockupGridWrap"></div>`;
@@ -1167,57 +1168,59 @@
           wrap.appendChild(grid);
           if (totalPg > 1) {
             const pgWrap = buildPagination(pg, totalPg, (newPg) => renderMockupPage(newPg));
-            wrap.appendChild(pgWrap); // outside grid
+            wrap.appendChild(pgWrap);
           }
         }
         renderMockupPage(1);
       }
 
     /* ────────────────────────────────────────────
-       STANDEE sub-tab
+       POSM & DISPLAY sub-tab (standees + tent cards)
     ──────────────────────────────────────────── */
-    } else if (activePrintTab === 'standee') {
-      LB_ITEMS = standeeImgs;
-      if (!standeeImgs.length) { container.innerHTML = '<div class="tab-empty"><p>Coming soon.</p></div>'; return; }
-      const sdWrap = document.createElement('div'); sdWrap.id = 'standeeWrap'; container.appendChild(sdWrap);
-      function renderStandeePage(pg) {
-        const w = document.getElementById('standeeWrap'); if (!w) return;
-        const perPage = 12; const totalPg = Math.ceil(standeeImgs.length / perPage);
-        const slice = standeeImgs.slice((pg-1)*perPage, pg*perPage);
+    } else if (activePrintTab === 'posm') {
+      LB_ITEMS = posmImgs;
+      if (!posmImgs.length) { container.innerHTML = '<div class="tab-empty"><p>Coming soon.</p></div>'; return; }
+      const posmWrap = document.createElement('div'); posmWrap.id = 'posmWrap'; container.appendChild(posmWrap);
+      function renderPosmPage(pg) {
+        const w = document.getElementById('posmWrap'); if (!w) return;
+        const perPage = 12; const totalPg = Math.ceil(posmImgs.length / perPage);
+        const slice = posmImgs.slice((pg-1)*perPage, pg*perPage);
         w.innerHTML = '';
         const grid = document.createElement('div'); grid.className = 'print-simple-grid';
         slice.forEach((item, i) => {
           const card = document.createElement('div'); card.className = 'print-simple-card';
           card.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">`;
-          card.addEventListener('click', () => { LB_ITEMS = standeeImgs; openLightbox((pg-1)*perPage + i); });
-          grid.appendChild(card);
-        });
-        w.appendChild(grid); // grid first
-        if (totalPg > 1) w.appendChild(buildPagination(pg, totalPg, renderStandeePage)); // pagination outside grid
-      }
-      renderStandeePage(1);
-
-    /* ── FLYER sub-tab ── */
-    } else {
-      LB_ITEMS = tentImgs;
-      if (!tentImgs.length) { container.innerHTML = '<div class="tab-empty"><p>Coming soon.</p></div>'; return; }
-      const tcWrap = document.createElement('div'); tcWrap.id = 'tentcardWrap'; container.appendChild(tcWrap);
-      function renderFlyerPage(pg) {
-        const w = document.getElementById('tentcardWrap'); if (!w) return;
-        const perPage = 12; const totalPg = Math.ceil(tentImgs.length / perPage);
-        const slice = tentImgs.slice((pg-1)*perPage, pg*perPage);
-        w.innerHTML = '';
-        const grid = document.createElement('div'); grid.className = 'print-simple-grid';
-        slice.forEach((item, i) => {
-          const card = document.createElement('div'); card.className = 'print-simple-card';
-          card.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">`;
-          card.addEventListener('click', () => { LB_ITEMS = tentImgs; openLightbox((pg-1)*perPage + i); });
+          card.addEventListener('click', () => { LB_ITEMS = posmImgs; openLightbox((pg-1)*perPage + i); });
           grid.appendChild(card);
         });
         w.appendChild(grid);
-        if (totalPg > 1) w.appendChild(buildPagination(pg, totalPg, renderFlyerPage));
+        if (totalPg > 1) w.appendChild(buildPagination(pg, totalPg, renderPosmPage));
       }
-      renderFlyerPage(1);
+      renderPosmPage(1);
+
+    /* ────────────────────────────────────────────
+       CARDS & PRINTS sub-tab
+    ──────────────────────────────────────────── */
+    } else {
+      LB_ITEMS = cardsImgs;
+      if (!cardsImgs.length) { container.innerHTML = '<div class="tab-empty"><p>Coming soon.</p></div>'; return; }
+      const cardsWrap = document.createElement('div'); cardsWrap.id = 'cardsWrap'; container.appendChild(cardsWrap);
+      function renderCardsPage(pg) {
+        const w = document.getElementById('cardsWrap'); if (!w) return;
+        const perPage = 12; const totalPg = Math.ceil(cardsImgs.length / perPage);
+        const slice = cardsImgs.slice((pg-1)*perPage, pg*perPage);
+        w.innerHTML = '';
+        const grid = document.createElement('div'); grid.className = 'print-simple-grid';
+        slice.forEach((item, i) => {
+          const card = document.createElement('div'); card.className = 'print-simple-card';
+          card.innerHTML = `<img src="${item.src}" alt="${item.title}" loading="lazy">`;
+          card.addEventListener('click', () => { LB_ITEMS = cardsImgs; openLightbox((pg-1)*perPage + i); });
+          grid.appendChild(card);
+        });
+        w.appendChild(grid);
+        if (totalPg > 1) w.appendChild(buildPagination(pg, totalPg, renderCardsPage));
+      }
+      renderCardsPage(1);
     }
   } // end buildLayoutB
 
@@ -1369,6 +1372,11 @@
 
 document.querySelectorAll('.print-tab').forEach(btn => {
   btn.addEventListener('click', () => {
+    // Destroy flipbook if leaving editorial sub-tab
+    if (activePrintTab === 'editorial' && pfInstance) {
+      try { pfInstance.destroy(); } catch (e) {}
+      pfInstance = null;
+    }
     activePrintTab = btn.dataset.print;
 
     document.querySelectorAll('.print-tab')
@@ -1384,7 +1392,7 @@ document.querySelectorAll('.print-tab').forEach(btn => {
 
   document.addEventListener('keydown', e => {
     if (document.getElementById('lightbox').classList.contains('open')) return;
-    if (activeTab === 'print' && pfInstance) {
+    if (activeTab === 'print' && activePrintTab === 'editorial' && pfInstance) {
       if (e.key === 'ArrowRight') pfInstance.flipNext();
       if (e.key === 'ArrowLeft')  pfInstance.flipPrev();
     }
@@ -1406,7 +1414,10 @@ document.querySelectorAll('.print-tab').forEach(btn => {
   function updateLb() {
     const item = LB_ITEMS[lbIdx];
     lbImg.src = item.src; lbImg.alt = item.title;
-    lbCap.innerHTML = item.title + '<em>' + TABS[activeTab].label + '</em>';
+    const tabLabel = activeTab === 'print'
+      ? (activePrintTab === 'editorial' ? 'Editorial' : activePrintTab === 'posm' ? 'POSM & Display' : 'Cards & Prints')
+      : TABS[activeTab].label;
+    lbCap.innerHTML = item.title + '<em>' + tabLabel + '</em>';
     lbCtr.textContent = (lbIdx + 1) + ' / ' + LB_ITEMS.length;
   }
 
