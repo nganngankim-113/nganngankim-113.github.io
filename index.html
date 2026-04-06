@@ -10,9 +10,9 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#060409;
-  --bg2:#0b0810;
-  --bg3:#100d16;
+  --bg:#06040d;
+  --bg2:#090714;
+  --bg3:#0d0b1a;
   --gold:#D4AF37;
   --gold2:#f2cc5c;
   --gold-dim:rgba(212,175,55,.10);
@@ -25,9 +25,19 @@
   --border2:rgba(212,175,55,.28);
   --glass:rgba(255,255,255,.03);
   --glass2:rgba(212,175,55,.05);
+  --glass-card:rgba(13,10,28,.72);
 }
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--warm);line-height:1.6;overflow-x:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--warm);line-height:1.6;overflow-x:hidden;
+  background-image:
+    radial-gradient(ellipse 45% 40% at 15% 35%, rgba(110,50,210,.10) 0%, transparent 55%),
+    radial-gradient(ellipse 38% 32% at 88% 65%, rgba(0,160,255,.07) 0%, transparent 52%),
+    radial-gradient(ellipse 30% 28% at 55% 20%, rgba(160,80,255,.06) 0%, transparent 48%),
+    radial-gradient(ellipse 70% 50% at 0% 0%,   rgba(80,40,160,.09) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 100% 30%, rgba(60,30,140,.07) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 35% at 20% 100%, rgba(70,35,150,.08) 0%, transparent 55%);
+  background-attachment:fixed;
+}
 
 /* ── CUSTOM CURSOR ── */
 #cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s,width .3s,height .3s,opacity .3s;mix-blend-mode:screen}
@@ -37,10 +47,10 @@ body:hover #cursor{opacity:1}
 /* ── GRID BG ── */
 body::before{content:'';position:fixed;inset:0;
   background-image:linear-gradient(rgba(212,175,55,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(212,175,55,.03) 1px,transparent 1px);
-  background-size:80px 80px;pointer-events:none;z-index:0}
+  background-size:80px 80px;pointer-events:none;z-index:1}
 
 /* ── CANVAS ── */
-#cv{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.6}
+#cv{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.85}
 
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;
@@ -48,11 +58,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;
   padding:1.1rem 5rem;
   transition:background .4s,border-color .4s,backdrop-filter .4s}
 .nav-right{display:flex;align-items:center;gap:2.5rem}
-nav.scrolled{background:rgba(6,4,9,.90);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
+nav.scrolled{background:rgba(6,4,13,.92);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
 .nav-logo{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);text-decoration:none}
 .nav-right{display:flex;align-items:center;gap:2rem}
-.nav-links{list-style:none;display:flex;gap:2.5rem}
-.nav-links a{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--muted);text-decoration:none;letter-spacing:.12em;text-transform:uppercase;transition:color .25s,background .25s;padding:.35rem .6rem;position:relative}
+.nav-links{list-style:none;display:flex;gap:0}
+.nav-links a{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--muted);text-decoration:none;letter-spacing:.12em;text-transform:uppercase;transition:color .25s,background .25s;padding:.35rem 1.35rem;position:relative}
 .nav-links a::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .25s}
 .nav-links a:hover{color:var(--gold);background:rgba(212,175,55,.14)}
 .nav-links a:hover::before{opacity:1}
@@ -67,7 +77,7 @@ nav.scrolled{background:rgba(6,4,9,.90);border-bottom:1px solid var(--border);ba
    HERO
 ══════════════════════════════════════ */
 #hero{position:relative;min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;
-  padding:1.5rem 5rem 1rem;gap:2rem;overflow:hidden;z-index:1}
+  padding:1.5rem 5rem 1rem;gap:2rem;overflow:hidden;z-index:2}
 
 /* Left text */
 .hero-left{}
@@ -207,7 +217,7 @@ nav.scrolled{background:rgba(6,4,9,.90);border-bottom:1px solid var(--border);ba
 /* ══════════════════════════════════════
    EXPERIENCE
 ══════════════════════════════════════ */
-#experience{padding:3rem 5rem 7rem;background:var(--bg2);position:relative;z-index:1;scroll-margin-top:70px}
+#experience{padding:3rem 5rem 7rem;background:rgba(9,7,20,.82);position:relative;z-index:2;scroll-margin-top:70px}
 #experience::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;
   background:linear-gradient(90deg,transparent 0%,var(--gold) 30%,var(--cyan) 70%,transparent 100%)}
 .exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3rem}
@@ -239,7 +249,7 @@ nav.scrolled{background:rgba(6,4,9,.90);border-bottom:1px solid var(--border);ba
 /* ══════════════════════════════════════
    SKILLS — Visual bars + tool grid
 ══════════════════════════════════════ */
-#skills{padding:7rem 5rem;background:var(--bg);position:relative;z-index:1;overflow:hidden}
+#skills{padding:7rem 5rem;background:rgba(6,4,13,.80);position:relative;z-index:2;overflow:hidden}
 /* Decorative glow */
 #skills::after{content:'';position:absolute;top:50%;right:-10%;transform:translateY(-50%);
   width:500px;height:500px;border-radius:50%;
@@ -275,9 +285,12 @@ nav.scrolled{background:rgba(6,4,9,.90);border-bottom:1px solid var(--border);ba
 /* ══════════════════════════════════════
    PORTFOLIO
 ══════════════════════════════════════ */
-#portfolio{padding:7rem 5rem;background:var(--bg2);position:relative;z-index:1}
+#portfolio{padding:7rem 5rem;background:rgba(9,7,20,.82);position:relative;z-index:2}
 #portfolio::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;
   background:linear-gradient(90deg,transparent,var(--cyan) 30%,var(--gold) 70%,transparent)}
+#portfolio::after{content:'';position:absolute;left:0;right:0;bottom:0;height:120px;
+  background:linear-gradient(to bottom,transparent,var(--bg));
+  pointer-events:none;z-index:2}
 
 /* Tabs */
 .port-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-top:2rem;margin-bottom:0}
@@ -314,7 +327,7 @@ nav.scrolled{background:rgba(6,4,9,.90);border-bottom:1px solid var(--border);ba
 .pcard:hover img{transform:scale(1.07);filter:brightness(1) saturate(1.1)}
 
 .pcard-overlay{position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(6,4,9,.95) 0%,rgba(6,4,9,.4) 45%,transparent 100%);
+  background:linear-gradient(to top,rgba(6,4,13,.96) 0%,rgba(6,4,13,.4) 45%,transparent 100%);
   display:flex;flex-direction:column;justify-content:flex-end;padding:1rem;
   opacity:0;transition:opacity .35s}
 .pcard:hover .pcard-overlay{opacity:1}
@@ -344,7 +357,7 @@ nav.scrolled{background:rgba(6,4,9,.90);border-bottom:1px solid var(--border);ba
 /* ══════════════════════════════════════
    CONTACT
 ══════════════════════════════════════ */
-#contact{padding:7rem 5rem;background:var(--bg);position:relative;z-index:1;overflow:hidden}
+#contact{padding:7rem 5rem;background:rgba(6,4,13,.80);position:relative;z-index:2;overflow:hidden}
 #contact::before{content:'';position:absolute;bottom:-10%;left:50%;transform:translateX(-50%);
   width:800px;height:400px;border-radius:50%;
   background:radial-gradient(ellipse,rgba(212,175,55,.06) 0%,transparent 60%);pointer-events:none}
@@ -359,11 +372,11 @@ nav.scrolled{background:rgba(6,4,9,.90);border-bottom:1px solid var(--border);ba
 
 .contact-links{display:flex;flex-direction:column;gap:.65rem}
 .c-link{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;
-  background:var(--glass);border:1px solid var(--border);
+  background:var(--glass-card);border:1px solid var(--border);
   color:var(--muted);text-decoration:none;cursor:none;
   clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
   transition:all .25s}
-.c-link:hover{border-color:var(--gold);color:var(--gold);background:var(--glass2);box-shadow:0 0 20px rgba(212,175,55,.05)}
+.c-link:hover{border-color:var(--gold);color:var(--gold);background:rgba(20,15,40,.82);box-shadow:0 0 20px rgba(212,175,55,.06)}
 .c-icon{width:34px;height:34px;flex-shrink:0;background:var(--gold-dim);border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;color:var(--gold);transition:all .25s}
 .c-link:hover .c-icon{background:var(--gold);color:var(--bg)}
@@ -372,15 +385,15 @@ nav.scrolled{background:rgba(6,4,9,.90);border-bottom:1px solid var(--border);ba
 /* ══════════════════════════════════════
    FOOTER
 ══════════════════════════════════════ */
-footer{background:#030207;border-top:1px solid var(--border);
-  padding:1.5rem 5rem;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+footer{background:rgba(5,3,16,.88);border-top:1px solid var(--border);
+  padding:1.5rem 5rem;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
 .foot-copy{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.08em;color:var(--muted)}
 .back-top{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s;cursor:none}
 .back-top:hover{color:var(--gold)}
 
 /* ── LIGHTBOX ── */
-.lightbox{position:fixed;inset:0;z-index:999;background:rgba(6,4,9,.97);backdrop-filter:blur(16px);
+.lightbox{position:fixed;inset:0;z-index:999;background:rgba(6,4,13,.97);backdrop-filter:blur(16px);
   display:flex;align-items:center;justify-content:center;
   opacity:0;pointer-events:none;transition:opacity .3s}
 .lightbox.open{opacity:1;pointer-events:all}
@@ -428,7 +441,7 @@ footer{background:#030207;border-top:1px solid var(--border);
   .stat-row{grid-template-columns:repeat(2,1fr)}
   .info-grid{grid-template-columns:1fr 1fr}
   .nav-links{display:none;flex-direction:column;gap:1rem;position:absolute;top:100%;left:0;right:0;
-    background:rgba(6,4,9,.98);border-bottom:1px solid var(--border);padding:1.5rem;backdrop-filter:blur(20px)}
+    background:rgba(6,4,13,.98);border-bottom:1px solid var(--border);padding:1.5rem;backdrop-filter:blur(20px)}
   .nav-links.open{display:flex}
   .nav-toggle{display:flex}
   .nav-right .nav-cta{display:none}
@@ -440,8 +453,8 @@ footer{background:#030207;border-top:1px solid var(--border);
 .print-subtabs{display:flex;justify-content:center;gap:0;border-bottom:1px solid var(--border);
   margin-top:1.5rem;margin-bottom:2rem;padding:0}
 .print-tab{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
-  padding:.65rem 2.5rem .65rem 0;background:none;border:none;border-bottom:2px solid transparent;
-  color:rgba(190,181,169,.45);cursor:pointer;transition:all .2s;margin-bottom:-1px;margin-right:1.5rem}
+  padding:.65rem 2rem;background:none;border:none;border-bottom:2px solid transparent;
+  color:rgba(190,181,169,.45);cursor:pointer;transition:all .2s;margin-bottom:-1px}
 .print-tab:hover{color:var(--warm)}
 .print-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
 
@@ -543,8 +556,8 @@ footer{background:#030207;border-top:1px solid var(--border);
 /* ── ABOUT REDESIGN ── */
 #about{
   padding:0 0 0;
-  background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
-  position:relative;z-index:1;overflow:hidden
+  background:transparent;
+  position:relative;z-index:2;overflow:hidden
 }
 
 /* Top eyebrow only */
@@ -576,10 +589,11 @@ footer{background:#030207;border-top:1px solid var(--border);
   display:grid;grid-template-columns:repeat(3,1fr);
   gap:1px;background:var(--border);
   border:1px solid var(--border);
-  margin-top:1.5rem
+  margin-top:1.5rem;
+  background-color:var(--glass-card)
 }
 .hiw-scard{
-  background:var(--bg);
+  background:transparent;
   padding:2rem 2rem 1.8rem;
   position:relative;overflow:hidden;
   transition:background .3s;
@@ -590,7 +604,12 @@ footer{background:#030207;border-top:1px solid var(--border);
   background:linear-gradient(90deg,transparent,var(--gold),transparent);
   opacity:0;transition:opacity .3s
 }
-.hiw-scard:hover{background:var(--glass2)}
+.hiw-scard::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(212,175,55,.05) 0%,transparent 65%);
+  pointer-events:none
+}
+.hiw-scard:hover{background:rgba(212,175,55,.04)}
 .hiw-scard:hover::before{opacity:1}
 .hiw-scard-top{color:var(--gold);opacity:.8;margin-bottom:1.2rem;display:flex;justify-content:center}
 .hiw-scard-top svg{width:34px;height:34px}
@@ -723,10 +742,12 @@ footer{background:#030207;border-top:1px solid var(--border);
   display:grid;grid-template-columns:repeat(4,1fr);
   gap:1px;background:var(--border);
   border:1px solid var(--border);
+  background-color:var(--glass-card);
   margin:0
 }
 .pstat-block{
-  background:var(--bg);padding:2.2rem 2rem;text-align:center;
+  background:transparent;
+  padding:2.2rem 2rem;text-align:center;
   position:relative;overflow:hidden;transition:background .3s
 }
 .pstat-block::before{
@@ -734,7 +755,12 @@ footer{background:#030207;border-top:1px solid var(--border);
   background:linear-gradient(90deg,transparent,var(--gold),transparent);
   opacity:0;transition:opacity .3s
 }
-.pstat-block:hover{background:var(--glass2)}
+.pstat-block::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(212,175,55,.05) 0%,transparent 65%);
+  pointer-events:none
+}
+.pstat-block:hover{background:rgba(212,175,55,.04)}
 .pstat-block:hover::before{opacity:1}
 .pstat-num{
   font-family:'Syne',sans-serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:800;
@@ -872,7 +898,7 @@ footer{background:#030207;border-top:1px solid var(--border);
       <li><a href="#portfolio">Portfolio</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="mailto:Nganngankim.113@gmail.com" class="nav-cta">Hire Me ↗</a>
+    <a href="/cdn-cgi/l/email-protection#69270e0807070e08070200044758585a290e04080005470a0604" class="nav-cta">Hire Me ↗</a>
   </div>
 </nav>
 
@@ -892,7 +918,7 @@ footer{background:#030207;border-top:1px solid var(--border);
     <p class="hero-desc">Crafting intentional visuals that connect brands to people — across digital platforms, print, and identity systems.</p>
     <div class="hero-btns">
       <a href="#portfolio" class="btn-p">View Portfolio <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a href="mailto:Nganngankim.113@gmail.com" class="btn-g">Get In Touch</a>
+      <a href="/cdn-cgi/l/email-protection#327c55535c5c55535c595b5f1c03030172555f535b5e1c515d5f" class="btn-g">Get In Touch</a>
     </div>
   </div>
 
@@ -1095,7 +1121,7 @@ footer{background:#030207;border-top:1px solid var(--border);
         <div class="tl-card tl-above tl-now-card">
           <div class="tl-period" style="color:var(--gold)">Now</div>
           <div class="tl-co" style="color:var(--warm)">Open to Opportunities</div>
-          <div class="tl-role">Freelance &amp; Full-time</div>
+          <div class="tl-role">Freelance &amp; Remote</div>
         </div>
       </div>
 
@@ -1199,7 +1225,7 @@ footer{background:#030207;border-top:1px solid var(--border);
         <div class="c-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
         <span class="c-text">Nganngankim.113@gmail.com</span>
       </a>
-      <a href="tel:034889895 2" class="c-link">
+      <a href="tel:0348898952" class="c-link">
         <div class="c-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.04a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
         <span class="c-text">0348 8989 52</span>
       </a>
@@ -1232,7 +1258,7 @@ footer{background:#030207;border-top:1px solid var(--border);
   <button class="lb-nav lb-next" id="lbNext">→</button>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
 <script src="portfolio-data.js" onerror="window.__noData=true"></script>
 <script>
 /* ══════════════════════════════════════
@@ -1272,31 +1298,93 @@ if(cur && ring){
 (function(){
   const c=document.getElementById('cv');
   const ctx=c.getContext('2d');
-  let W,H,pts=[];
+  let W,H,pts=[],t=0;
   function resize(){W=c.width=innerWidth;H=c.height=innerHeight}
   window.addEventListener('resize',resize);resize();
-  const cols=['rgba(212,175,55,','rgba(0,212,255,','rgba(225,212,194,'];
-  for(let i=0;i<90;i++) pts.push({
-    x:Math.random()*W,y:Math.random()*H,
-    vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,
-    r:Math.random()*1.2+.3,
-    c:cols[Math.floor(Math.random()*cols.length)],
-    a:Math.random()*.5+.1
+
+  /* star field — 3 sizes */
+  for(let i=0;i<160;i++) pts.push({
+    x:Math.random()*W, y:Math.random()*H,
+    vx:(Math.random()-.5)*.12, vy:(Math.random()-.5)*.12,
+    r: i<100 ? Math.random()*.8+.2 : i<140 ? Math.random()*1.4+.6 : Math.random()*2.2+1.2,
+    gold: Math.random()<.55,
+    cyan: Math.random()<.18,
+    a: Math.random()*.6+.15,
+    phase: Math.random()*Math.PI*2,
+    ts: Math.random()*.6+.3
   });
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    pts.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
-      if(p.y<0)p.y=H;if(p.y>H)p.y=0;
-      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=p.c+p.a+')';ctx.fill();
+
+  /* shooting stars pool */
+  const shoots=[];
+  function spawnShoot(){
+    if(shoots.length>=3) return;
+    shoots.push({
+      x: Math.random()*W*.45,
+      y: Math.random()*H*.35,
+      vx: 4+Math.random()*3,
+      vy: 1+Math.random()*1.8,
+      life: 1,
+      decay: .009+Math.random()*.007,
+      len: 80+Math.random()*60
     });
+  }
+  let shootTimer=0;
+
+  function draw(){
+    t+=.016;
+    ctx.clearRect(0,0,W,H);
+
+    /* stars with twinkle */
+    pts.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+      if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+      const tw = .45 + .55*Math.sin(t*p.ts+p.phase);
+      const alpha = p.a * tw;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      if(p.cyan)      ctx.fillStyle=`rgba(0,212,255,${alpha})`;
+      else if(p.gold) ctx.fillStyle=`rgba(212,175,55,${alpha})`;
+      else            ctx.fillStyle=`rgba(220,210,200,${alpha*.5})`;
+      ctx.fill();
+      /* glow halo on bigger stars */
+      if(p.r>1.2){
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r*2.5,0,Math.PI*2);
+        const col = p.cyan ? `rgba(0,212,255,` : `rgba(212,175,55,`;
+        ctx.fillStyle = col+(alpha*.12)+')';
+        ctx.fill();
+      }
+    });
+
+    /* connection lines */
     for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
-      const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
-      if(d<110){ctx.beginPath();ctx.strokeStyle=`rgba(212,175,55,${.07*(1-d/110)})`;ctx.lineWidth=.5;
-        ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke()}
+      const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.sqrt(dx*dx+dy*dy);
+      if(d<90){
+        ctx.beginPath();
+        ctx.strokeStyle=`rgba(212,175,55,${.055*(1-d/90)})`;
+        ctx.lineWidth=.4;
+        ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.stroke();
+      }
     }
+
+    /* shooting stars */
+    shootTimer++;
+    if(shootTimer>120){ shootTimer=0; if(Math.random()<.7) spawnShoot(); }
+    for(let i=shoots.length-1;i>=0;i--){
+      const s=shoots[i];
+      const grad=ctx.createLinearGradient(s.x-s.vx*(s.len/s.vx*.28),s.y-s.vy*(s.len/s.vx*.28),s.x,s.y);
+      grad.addColorStop(0,'rgba(212,175,55,0)');
+      grad.addColorStop(.5,`rgba(230,190,80,${s.life*.3})`);
+      grad.addColorStop(1,`rgba(255,240,150,${s.life})`);
+      ctx.beginPath(); ctx.strokeStyle=grad; ctx.lineWidth=1.5;
+      ctx.moveTo(s.x-s.vx*(s.len/s.vx*.28),s.y-s.vy*(s.len/s.vx*.28));
+      ctx.lineTo(s.x,s.y); ctx.stroke();
+      /* bright tip */
+      ctx.beginPath(); ctx.arc(s.x,s.y,2,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,248,200,${s.life})`; ctx.fill();
+      s.x+=s.vx; s.y+=s.vy; s.life-=s.decay;
+      if(s.life<=0||s.x>W+80) shoots.splice(i,1);
+    }
+
     requestAnimationFrame(draw);
   }
   draw();
@@ -1639,3 +1727,4 @@ loadPortfolio();
 </script>
 </body>
 </html>
+document.querySelectorAll('#skillsLeft,#skillsRight').forEach(el=>skillOb
