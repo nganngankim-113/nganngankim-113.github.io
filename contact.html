@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Nguyen Kim Ngan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/main.css">
+<style>
+/* Contact page: full viewport, vertically centered */
+body { min-height:100vh; display:flex; flex-direction:column }
+#contact-page {
+  flex:1; display:flex; align-items:center; justify-content:center;
+  padding:7rem var(--section-px);
+  position:relative; z-index:1; overflow:hidden;
+}
+#contact-page::before {
+  content:''; position:absolute; bottom:-10%; left:50%; transform:translateX(-50%);
+  width:800px; height:400px; border-radius:50%;
+  background:radial-gradient(ellipse, rgba(212,175,55,.06) 0%, transparent 60%);
+  pointer-events:none;
+}
+.contact-page-inner {
+  width:100%; max-width:900px;
+  display:flex; justify-content:space-between; align-items:center; gap:3rem;
+}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<canvas id="cv"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="index.html"><span style="color:var(--gold)">NK</span><span style="color:var(--warm)">N</span></a>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  <div class="nav-right">
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="index.html#portfolio">Portfolio</a></li>
+      <li><a href="contact.html" style="color:var(--gold)">Contact</a></li>
+    </ul>
+    <a href="mailto:Nganngankim.113@gmail.com" class="nav-cta">Hire Me ↗</a>
+  </div>
+</nav>
+
+<!-- CONTACT PAGE -->
+<div id="contact-page">
+  <div class="spark-field" aria-hidden="true">
+    <div class="sp sp-dot lg" style="--dur:3s;--del:.5s;top:15%;left:5%"></div>
+    <div class="sp sp-cross" style="--dur:4.8s;--del:1.4s;top:10%;right:8%"></div>
+    <div class="sp sp-dot cyan" style="--dur:2.7s;--del:2s;top:60%;left:2%"></div>
+    <div class="sp sp-drift" style="--dur:8s;--del:.2s;top:30%;right:4%"></div>
+    <div class="sp sp-dot sm" style="--dur:3.6s;--del:1s;top:80%;right:20%"></div>
+    <div class="sp sp-cross" style="--dur:6s;--del:2.8s;top:70%;left:40%"></div>
+    <div class="sp sp-dot" style="--dur:2.4s;--del:0s;top:45%;right:2%"></div>
+  </div>
+
+  <div class="contact-page-inner">
+    <div class="fade d1">
+      <div class="eyebrow">Let's Connect</div>
+      <div class="contact-left-title" style="margin-top:.75rem">Let's create something <em>meaningful</em></div>
+      <p class="contact-sub">Open for freelance projects, full-time opportunities, and creative collaborations. I design with intent — let's discuss your vision.</p>
+    </div>
+
+    <div class="contact-links fade d2">
+      <a href="mailto:Nganngankim.113@gmail.com" class="c-link">
+        <div class="c-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <span class="c-text">Nganngankim.113@gmail.com</span>
+      </a>
+      <a href="tel:0348898952" class="c-link">
+        <div class="c-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.04a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <span class="c-text">0348 8989 52</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nganngankim113" target="_blank" rel="noopener" class="c-link">
+        <div class="c-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+        <span class="c-text">linkedin.com/in/nganngankim113</span>
+      </a>
+      <div class="c-link" style="cursor:default">
+        <div class="c-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <span class="c-text">Ho Chi Minh City, Vietnam</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="foot-copy">© 2025 Nguyen Kim Ngan — All rights reserved.</span>
+  <a href="index.html" class="back-top">Back ↑</a>
+</footer>
+
+<script>
+/* Cursor */
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+if(cur&&ring){let mx=0,my=0,rx=0,ry=0;document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);}animRing();document.querySelectorAll('a,button,.c-link').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';ring.style.width='52px';ring.style.height='52px';ring.style.borderColor='rgba(212,175,55,.7)';});el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';ring.style.width='36px';ring.style.height='36px';ring.style.borderColor='rgba(212,175,55,.5)';});});}
+/* Particles */
+(function(){const c=document.getElementById('cv'),ctx=c.getContext('2d');let W,H,pts=[];function resize(){W=c.width=innerWidth;H=c.height=innerHeight}window.addEventListener('resize',resize);resize();const cols=['rgba(212,175,55,','rgba(0,212,255,','rgba(237,228,213,'];for(let i=0;i<60;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:Math.random()*1.2+.3,c:cols[Math.floor(Math.random()*cols.length)],a:Math.random()*.5+.1});function draw(){ctx.clearRect(0,0,W,H);pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c+p.a+')';ctx.fill();});requestAnimationFrame(draw);}draw();})();
+/* Scroll nav */
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('scrolled',scrollY>60);},{passive:true});
+/* Fade in */
+const fo=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');fo.unobserve(e.target)}});},{threshold:.08});document.querySelectorAll('.fade').forEach(el=>fo.observe(el));
+/* Nav toggle */
+document.getElementById('navToggle').addEventListener('click',()=>{document.getElementById('navLinks').classList.toggle('open');});
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>{document.getElementById('navLinks').classList.remove('open');}));
+</script>
+</body>
+</html>

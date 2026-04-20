@@ -27,7 +27,6 @@ function scanDir(dir, type) {
 
 // ── Simple tabs (flat folder) ──────────────────────────────────────────────
 const SIMPLE_FOLDERS = [
-  { key: 'advertising', label: 'Advertising & Digital', dir: 'Advertising & Digital' },
   { key: 'branding',    label: 'Branding & Packaging',  dir: 'Branding & Packaging' },
   { key: 'featured',    label: 'Featured Projects',     dir: 'Featured Projects' },
   { key: 'playground',  label: 'Playground',            dir: 'Playground' },
@@ -42,6 +41,32 @@ for (const folder of SIMPLE_FOLDERS) {
   console.log(`${folder.dir}: ${images.length} images`);
   total += images.length;
 }
+
+// ── Advertising & Digital (subfolders by industry/brand) ──────────────────
+// Folder structure:
+//   Advertising & Digital/
+//     Interior & Architecture/   ← was: Bravat
+//     Fitness & Wellness/        ← was: Nutrition Depot
+//     Hospitality & Travel/      ← was: The Kupid
+//     F&B/                       ← was: Thom
+const ADV_BASE = 'Advertising & Digital';
+const ADV_BRANDS = [
+  { folder: 'Interior & Architecture', brand: 'Interior & Architecture' },
+  { folder: 'Fitness & Wellness',      brand: 'Fitness & Wellness'      },
+  { folder: 'Hospitality & Travel',    brand: 'Hospitality & Travel'    },
+  { folder: 'F&B',                     brand: 'F&B'                     },
+];
+
+let advImages = [];
+for (const { folder, brand } of ADV_BRANDS) {
+  const subDir = `${ADV_BASE}/${folder}`;
+  const imgs = scanDir(subDir).map(img => ({ ...img, brand }));
+  console.log(`  ${subDir}: ${imgs.length} images (brand=${brand})`);
+  advImages = advImages.concat(imgs);
+  total += imgs.length;
+}
+tabs['advertising'] = { label: 'Advertising & Digital', images: advImages };
+console.log(`Advertising & Digital total: ${advImages.length} images`);
 
 // ── Print & Collateral (3 subfolders with type tags) ──────────────────────
 const PRINT_BASE = 'Print & Collateral';
